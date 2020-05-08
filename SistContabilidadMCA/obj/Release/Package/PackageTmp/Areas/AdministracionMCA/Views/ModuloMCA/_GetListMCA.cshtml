@@ -1,0 +1,139 @@
+﻿@{
+    @*<h2 class="box-title"> Módulos MCA de la UCR @ViewBag.Ucr</h2>*@
+var grid = Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "GetListMCA";
+    settings.CallbackRouteValues = new { Controller = "ModuloMCA", Action = "GetListMCA" };
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.EllipsisMode = PagerEllipsisMode.OutsideNumeric;
+    settings.SettingsPager.PageSize = 10;
+    settings.SettingsPager.Visible = true;
+    settings.Settings.ShowGroupPanel = false;
+    settings.Settings.ShowFilterRowMenu = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.SettingsBehavior.AllowSelectByRowClick = true;
+    settings.Settings.ShowHeaderFilterButton = true;
+    //settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.NextColumn;
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Visible;
+    //settings.Theme = "Metropolis Blue";
+    settings.KeyFieldName = "ucrId";
+
+    settings.Columns.Add(column =>
+    {
+        column.Caption = "";
+        column.Width = System.Web.UI.WebControls.Unit.Pixel(50);
+        column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        column.FixedStyle = GridViewColumnFixedStyle.Left;
+        column.SetDataItemTemplateContent(container =>
+        {
+            var moduloMCAId = DataBinder.Eval(container.DataItem, "moduloMCAId");
+            //ViewContext.Writer.Write(string.Format("<a class='' title='Editar Datos del MCA' data-toggle='tooltip' data-placement='rigth' href='' onclick='return EditModuloMCA({0})'><i class='btn btn-info fa fa-pencil-square-o'></i></a>", moduloMCAId));
+            //ViewContext.Writer.Write(string.Format("<a class='' title='Editar Datos del MCA' data-toggle='tooltip' data-placement='rigth' onclick='return fnValidarEdicion({0})' href='ModuloMCA/EditMCA?moduloMCAId={0}'><i class='btn btn-info fa fa-pencil-square-o'></i></a>", moduloMCAId));
+            ViewContext.Writer.Write(string.Format("<a class='' title='Editar Datos del MCA' data-toggle='tooltip' data-placement='rigth' onclick='return fnValidarEdicion({0})'><i class='btn btn-info fa fa-pencil-square-o'></i></a>", moduloMCAId));
+
+        });
+
+    });
+    settings.Columns.Add(column =>
+    {
+        column.Caption = "";
+        column.Width = System.Web.UI.WebControls.Unit.Pixel(50);
+        //column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        column.FixedStyle = GridViewColumnFixedStyle.Left;
+        column.SetDataItemTemplateContent(container =>
+        {
+            var moduloMCAId = DataBinder.Eval(container.DataItem, "moduloMCAId");
+            ViewContext.Writer.Write(string.Format("<a class='' title='Administración de Acuerdos Suplementarios' data-toggle='tooltip' data-placement='rigth' href='' onclick='return fnDetalleProyecto({0})'><i class='btn btn-info fa fa-folder-o'></i></a>", moduloMCAId));
+        });
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        column.Caption = "Nombre MCA";
+        column.Width = System.Web.UI.WebControls.Unit.Percentage(45);
+        column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        column.FieldName = "nombreModuloMCA";
+        //column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        column.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        column.Caption = "Proyecto";
+        column.Width = System.Web.UI.WebControls.Unit.Percentage(45);
+        column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        //column.FieldName = "Proyectos.nombreProyecto";
+        column.FieldName = "nombreProyecto";
+        //column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        //column.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        column.Caption = "Departamento";
+        column.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        //column.FieldName = "Departamentos.departamento";
+        column.FieldName = "departamento";
+        //column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        //column.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        column.Caption = "Municipio";
+        column.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        column.FieldName = "municipio";
+        //column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        //column.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;column.Caption = "Longitud (KM)";
+        column.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        column.FieldName = "longuitud";
+        //column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        //column.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        column.Caption = "Monto (C$)";
+        column.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        column.FieldName = "monto";
+        //column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        //column.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+
+    //funcion que permite refrescar el grid en base al parametro
+    //settings.ClientSideEvents.BeginCallback = @"function (s,e) {
+    //                                           e.customArgs['moduloMCAId']=$('#moduloMCAId').val();}";
+
+    settings.ClientSideEvents.BeginCallback = @"function (s,e) {
+                                                   e.customArgs['ucrId']=$('#ucrId').val();                                              
+                                          }";
+
+    //settings.ClientSideEvents.BeginCallback = @"function (s, e) {
+    //                                            e.customArgs['areaId']= $('#areaId').val();
+    //                                            e.customArgs['mesId']= $('#mesId').val();
+    //                                            e.customArgs['anhoId']= $('#anhoId').val();}";
+
+
+
+});
+if (ViewData["EditError"] != null)
+{
+    grid.SetEditErrorText((string)ViewData["EditError"]);
+}
+}
+@grid.Bind(Model).GetHtml()

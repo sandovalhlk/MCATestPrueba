@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = "Comprobantes";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+@section scripts{
+    <script src="~/Areas/ContabilidadMCA/Scripts/Cuentas/comprobantes.js"></script>
+}
+@if (User.IsInRole("CONTADOR"))
+{
+    using (Html.BeginForm(null, null, FormMethod.Post, new { area = "", id = "formAddComprobante" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="container-fluid">
+            <div style="padding-top:1em;">
+                <div class="row">
+                    <input type="hidden" id="varComprobanteId" value="" />
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header card-outline-naranja">
+                                <h5 class="m-b-0 text-white">Listado de Comprobantes</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                @Html.Action("ListComprobantes", "Cuentas")
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        /*****************Modal Anulaciones Comprobantes **********************/
+        <div id="modalAnulacion" class="modal fade in" role="dialog" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header card-info">
+                        <h4 class="modal-title panel-title2 text-white"> Ejecucion de Cierre Contable</h4>
+                    </div>
+                    <div class="modal-body">
+                        
+                        <div class="col-md-12">
+                            <div class="row">
+                                <label class="control-label ">Razon de la Anulación<span class="required">*</span></label>
+                                <textarea id="razonAnulacion" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnAnulacion" class="btn btn-default">Ejecutar</button>
+                        <button type="button" class="btn btn-inverse" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    }
+}

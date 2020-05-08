@@ -1,0 +1,182 @@
+﻿@using DataLayerMCA
+@model Comprobantes
+@{
+    ViewBag.Title = "AddComprobante";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+@section scripts{
+    <script src="~/Scripts/plugins/EasyAutoComplete/jquery.easy-autocomplete.min.js"></script>
+    <script src="~/Scripts/Personal/jqwdGeneral.js"></script>
+    <script src="~/Areas/ContabilidadMCA/Scripts/Cuentas/AddComprobante.js"></script>
+
+}
+<link href="~/Scripts/plugins/EasyAutoComplete/easy-autocomplete.css" rel="stylesheet" />
+
+
+@if (User.IsInRole("CONTADOR"))
+{
+    using (Html.BeginForm(null, null, FormMethod.Post, new { area = "", id = "formAddComprobante" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("comprobanteId")
+        @Html.Hidden("estadoId")
+        <input type="hidden" id="editC" value=@ViewBag.editC />
+        <input type="hidden" id="reinicio" name="reinicio" value="" />
+        <div class="container-fluid">
+            <div style="padding-top:1em;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header card-outline-naranja">
+                                <h5 class="m-b-0 text-white">
+                                    Agregar Comprobante <button id="btnPrintComp" type="button" class="btn fa fa-print btn-danger pull-right" title='Imprimir Comprobante' data-toggle='tooltip' style="font-size:medium"></button>
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label>N° Comprobate</label>
+                                               
+                                                @Html.EditorFor(model => model.numero, new { htmlAttributes = new { @class = "form-control modificacion", @readonly = "readonly", maxlength = 10 } })
+                                               
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>Tipo</label>
+                                             
+                                                @Html.DropDownList("tipoComprobanteId", ViewBag.SelectComprobanteTipo as SelectList, "***Seleccione una Opcion***", htmlAttributes: new { @class = "form-control modificacion", @readonly = "readonly", @required = "required", @data_val = "true", @data_val_required = "Campo Requerido" })
+                                            </div>
+
+
+                                            <div class="col-md-3">
+                                                <label>Fecha </label>
+                                                <div class="input-group date" style="z-index:300;">
+                                                    <input type="text" class="form-control datepicker" id="fechaComprobante" name="fechaInicio" value="@(Model == null ? DateTime.Now.ToShortDateString() : Model.fechaComprobante.ToShortDateString())" required="required" data-val-required="Campo requerido." />
+                                                    <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 chequeForm"  style="display:none;">
+                                                <label>N° Cheque</label>
+                                                @Html.EditorFor(model => model.numCheque, new { htmlAttributes = new { @class = "form-control modificacion", @disabled="disabled", maxlength = 10 } })
+                                            </div>
+                                            <div class="col-md-2 chequeForm" style="display:none;padding-top:25px">
+                                                
+                                                <button type="button" class="btn btn-info modificacion" id="btnReinicioCheque" >ReInicializar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label>Referencia</label>
+                                                
+                                                @Html.TextAreaFor(model => model.concepto, htmlAttributes: new { @class = "form-control modificacion", @style = "width:100%" })
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 chequeForm" style="display:none">
+                                                <label>Beneficiario</label>
+                                             
+                                                @Html.EditorFor(model => model.beneficiario, new { htmlAttributes = new { @class = "form-control modificacion", maxlength = 50 } })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                    </div>
+                                </div>
+                                <div>
+                                    <input id="btnAddMovimiento" class="btn btn-success modificacion" type="button" value="Agregar Movimiento de Cuenta" />
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div id="jqwgMovimientos" class="modificacion">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        @*<div class="col-md-2">*@
+
+
+                                        <div class="col-md-1">
+                                            <input id="btnGuardarComprobante" class="btn btn-default modificacion" type="button" value="Guardar" />
+                                        </div>
+                                        <div class="col-md-1">
+                                            <button id="btnCancelar" class="btn btn-inverse" type="button" value="">Cancelar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        /*****************Modal para agregar Movimientos**********************/
+        <div id="modalAddMovimientos" class="modal fade in" role="dialog" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog modal-lg modalRedondo">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title panel-title2"> Registro de Movimientos</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <input type="hidden" id="cuentaId" name="cuentaId" value="" />
+                            <input type="hidden" id="Cuentabanco" name="Cuentabanco" value="" />
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label class="col-md-2 control-label">N° Cuenta<span class="required">*</span></label>
+                                        <div class="col-md-3">
+                                            <input type="text" id="codigo" name="codigo" value="" class="form-control" />
+                                        </div>
+
+                                        <label class="col-md-2 control-label">Descripcion<span class="required">*</span></label>
+                                        <div class="col-md-5">
+                                            <input type="text" id="descripcion" name="descripcion" value="" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label class="col-md-2 control-label">DEBITO<span class="required">*</span></label>
+                                        <div class="col-md-3">
+                                            @*<input type="text" id="debito" name="debito" value="" class="form-control" />*@
+                                            <input type="text"  id="debito" name="debito" value="" class="form-control decimalComma" />
+                                            
+                                        </div>
+                                        <label class="col-md-2 control-label">CREDITO<span class="required">*</span></label>
+                                        <div class="col-md-5">
+                                            <input type="text"  id="credito" name="credito" value="" class="form-control decimalComma" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="btnInsertarMov" class="btn btn-default">Guardar</button>
+                            <button type="button" class="btn btn-inverse" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.Partial("_ReiniciarCheques")
+    }
+}
+else
+{
+    <div>
+        <h1> ACCESO NO AUTORIZADO. NO TIENE PERMISOS PARA ACCEDER A ESTA PANTALLA</h1>
+    </div>
+}

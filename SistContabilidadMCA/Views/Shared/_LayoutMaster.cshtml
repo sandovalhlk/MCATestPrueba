@@ -1,0 +1,341 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="~/Content/Plantilla_MaterialPro/assets/images/favicon2.ico">
+    <title>Modulos MCA - MTI</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="~/Content/Plantilla_MaterialPro/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/Plantilla_MaterialPro/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Plantilla_MaterialPro/assets/plugins/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Plantilla_MaterialPro/assets/plugins/switchery/dist/switchery.min.css" rel="stylesheet" />
+    <link href="~/Content/Plantilla_MaterialPro/assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="~/Content/Plantilla_MaterialPro/assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css" rel="stylesheet" />
+    <link href="~/Content/Plantilla_MaterialPro/assets/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
+    <link href="~/Content/Plantilla_MaterialPro/assets/plugins/multiselect/css/multi-select.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Plantilla_MaterialPro/assets/plugins/chartist-js/dist/chartist.min.css" rel="stylesheet">
+    <link href="~/Content/Plantilla_MaterialPro/assets/plugins/chartist-js/dist/chartist-init.css" rel="stylesheet">
+    <link href="~/Content/Plantilla_MaterialPro/assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css" rel="stylesheet">
+    <link href="~/Content/Plantilla_MaterialPro/assets/plugins/css-chart/css-chart.css" rel="stylesheet">
+    <link href="~/Content/Plantilla_MaterialPro/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/Content/Plantilla_MaterialPro/assets/plugins/dropify/dist/css/dropify.min.css">
+
+    <!-- Page plugins css -->
+    <link href="~/Content/Plantilla_MaterialPro/assets/plugins/clockpicker/dist/jquery-clockpicker.min.css" rel="stylesheet">
+    <!-- Color picker plugins css -->
+    <link href="~/Content/Plantilla_MaterialPro/assets/plugins/jquery-asColorPicker-master/css/asColorPicker.css" rel="stylesheet">
+    <!-- Date picker plugins css -->
+    <!-- Daterange picker plugins css -->
+    <link href="~/Content/Plantilla_MaterialPro/assets/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
+    <link href="~/Content/Plantilla_MaterialPro/assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <link href="~/Content/Plantilla_MaterialPro/scss/icons/material-design-iconic-font/css/materialdesignicons.min.css" rel="stylesheet" />
+    <link href="~/Content/Plantilla_MaterialPro/scss/icons/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/PersonalStyle/StyleGeneral.css" rel="stylesheet" />
+
+
+    <!-- You can change the theme colors from here -->
+    <link href="~/Content/Plantilla_MaterialPro/css/style.css" rel="stylesheet">
+    <link href="~/Content/Plantilla_MaterialPro/css/colors/blue.css" id="theme" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="~/Scripts/plugins/sweetalert/sweet-alert.css" rel="stylesheet" />
+    <link href="~/Content/Plantilla_MaterialPro/assets/plugins/chartist-js/dist/chartist.min.css" rel="stylesheet">
+    <link href="~/Content/Plantilla_MaterialPro/assets/plugins/chartist-js/dist/chartist-init.css" rel="stylesheet">
+    <link href="~/Content/Plantilla_MaterialPro/assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css" rel="stylesheet">
+
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+    new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },
+    new StyleSheet { ExtensionSuite = ExtensionSuite.HtmlEditor },
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView },
+    new StyleSheet { ExtensionSuite = ExtensionSuite.CardView },
+    new StyleSheet { ExtensionSuite = ExtensionSuite.PivotGrid },
+    new StyleSheet { ExtensionSuite = ExtensionSuite.Chart },
+    new StyleSheet { ExtensionSuite = ExtensionSuite.Report },
+    new StyleSheet { ExtensionSuite = ExtensionSuite.Scheduler },
+    new StyleSheet { ExtensionSuite = ExtensionSuite.TreeList },
+    new StyleSheet { ExtensionSuite = ExtensionSuite.RichEdit },
+    new StyleSheet { ExtensionSuite = ExtensionSuite.Spreadsheet },
+    new StyleSheet { ExtensionSuite = ExtensionSuite.SpellChecker }
+)
+    @Styles.Render("~/jqwidgetscss")
+    <link href="~/Content/StylePersonal.css" rel="stylesheet" />
+    @RenderSection("styles", required: false)
+
+    <script src="~/Content/Plantilla_MaterialPro/assets/plugins/jquery/jquery.min.js"></script>
+    <script src="~/Scripts/plugins/sweetalert/sweet-alert.min.js"></script>
+    <script src="~/Scripts/ModalsOpen.js"></script>
+    <script src="~/Content/PersonalStyle/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/PersonalStyle/datepicker/locales/bootstrap-datepicker.es.js"></script>
+    <script src="~/Content/PersonalStyle/bootstrap-datepicker/init.js"></script>
+
+    <style>
+        #contenido {
+            margin: 0 0 65px;
+            min-height: 100%;
+            /*background-image: url(ssl/Content/img/background.png);*/
+            background-image: url(/Content/Plantilla_MaterialPro/assets/images/personales/seigaiha.png);
+            background-repeat: repeat;
+            /*background-color: #ecf0f5;*/
+            background-color: #c3ccd5;
+        }
+    </style>
+</head>
+
+<body class="fix-header fix-sidebar card-no-border logo-center">
+
+    <script src="~/Content/Plantilla_MaterialPro/assets/plugins/jquery/jquery.min.js"></script>
+
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView }
+    )
+    <script src="~/Scripts/jquery.string.js"></script>
+    <script src="~/Scripts/ModalsOpen.js"></script>
+    <script src="~/Scripts/jquery.mask.js"></script>
+    <script src="~/Scripts/jquery.mask.init.js"></script>
+
+    <!-- This is data table -->
+
+    <script src="~/Content/Plantilla_MaterialPro/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+
+    <!-- start - This is for export functionality only -->
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+    <script src="~/Content/Plantilla_MaterialPro/assets/plugins/chartist-js/dist/chartist.min.js"></script>
+    <script src="~/Content/Plantilla_MaterialPro/assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js"></script>
+
+    <!-- slimscrollbar scrollbar JavaScript -->
+
+    <script src="~/Content/Plantilla_MaterialPro/js/jquery.slimscroll.js"></script>
+    <!--Wave Effects -->
+    <script src="~/Content/Plantilla_MaterialPro/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="~/Content/Plantilla_MaterialPro/js/sidebarmenu.js"></script>
+
+    <!--stickey kit -->
+    <script src="~/Content/Plantilla_MaterialPro/assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <script src="~/Content/Plantilla_MaterialPro/assets/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <!--Custom JavaScript -->
+    <script src="~/Content/Plantilla_MaterialPro/js/custom.min.js"></script>
+
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="~/Content/Plantilla_MaterialPro/assets/plugins/bootstrap/js/popper.min.js"></script>
+    <script src="~/Content/Plantilla_MaterialPro/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Content/Plantilla_MaterialPro/assets/plugins/moment/min/moment.min.js"></script>
+
+
+    @Scripts.Render("~/jqwidgetsjs")
+
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+        </svg>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+
+    <div id="main-wrapper">
+        <!-- ==============================================================  #1e88e5 -->
+        <!-- Topbar header - style you can find in pages.scss style="background-color:#263238" -->
+        <!-- ============================================================== -->
+        <header class="topbar" style="background-color:#346cb0">
+            <nav class="navbar top-navbar navbar-expand-md navbar-light">
+                <!-- ============================================================== -->
+                <!-- Logo -->
+                <!-- ============================================================== -->
+                <div class="">
+                    <div class="row">
+
+                        <div class="Col-md-02"><img src="~/Content/img/LogoMCA_1_1.png" width="200px" /></div>
+
+                    </div>
+                </div>
+                <div class="navbar-collapse">
+                    <ul class="navbar-nav mr-auto mt-md-0">
+                        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="mdi mdi-menu"></i></a> </li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss   -->
+        <!-- ============================================================== -->
+        <aside class="left-sidebar">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li class="nav-small-cap">PERSONAL</li>
+                        <li>
+                            <a class="has-arrow" href="@Url.Action("Index", "Home", new { Area = "" })" aria-expanded="false"><i class="mdi mdi-cards-outline"></i><span class="hide-menu">Inicio</span></a>
+                        </li>
+                        @if (User.IsInRole("PROMOTOR"))
+                        {
+                            <li>
+                                <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-cubes"></i><span class="hide-menu"> Administración</span></a>
+                                <ul aria-expanded="false" class="collapse pulse animated" style="width:300px">
+
+                                    <li><a href="@Url.Action("Index", "ModuloMCA", new { Area = "AdministracionMCA" })">Modulos MCA</a></li>
+                                    <li><a href="@Url.Action("Index", "Catalogos", new { Area = "Catalogos" })">Proyectos</a></li>
+                                    <li><a href="@Url.Action("Index", "Convenio", new { Area = "Catalogos" })">Convenios</a></li>
+                                    <li><a href="@Url.Action("Index", "TipoExtension", new { Area = "Catalogos" })">Tipo de Extensión</a></li>
+                                </ul>
+                            </li>
+                        }
+                        @if (User.IsInRole("CONTADOR"))
+                        {
+                            <li>
+                                <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-bank"></i><span class="hide-menu">Cuentas y Comprobantes</span></a>
+                                <ul aria-expanded="false" class="collapse pulse animated" style="width:300px">
+
+                                    <li><a href="@Url.Action("Index", "Cuentas", new { Area = "ContabilidadMCA" })">Cátalogo de Cuentas</a></li>
+                                    <li><a href="@Url.Action("AddComprobante", "Cuentas", new { Area = "ContabilidadMCA" })">Agregar Comprobantes</a></li>
+                                    <li><a href="@Url.Action("Comprobantes", "Cuentas", new { Area = "ContabilidadMCA" })">Listado de Comprobantes</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-chart-line"></i><span class="hide-menu">Procesos Contables</span></a>
+                                <ul aria-expanded="false" class="collapse pulse animated" style="width:300px">
+                                    <li><a href="@Url.Action("CierresContables", "Cuentas", new { Area = "ContabilidadMCA" })">Contabilización</a></li>
+                                    <li><a href="@Url.Action("Index", "ConciliacionBancaria", new { Area = "EstadosFinancieros" })">Conciliación Bancaria</a></li>
+                                    
+
+                                </ul>
+                            </li>
+                        }
+                        @if (User.IsInRole("ADMIN-MCA"))
+                        {
+                            <li>
+                                <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-chart-line"></i><span class="hide-menu">Revertir</span></a>
+                                <ul aria-expanded="false" class="collapse pulse animated" style="width:300px">
+                                    <li><a href="@Url.Action("ReversionCierre", "Cuentas", new { Area = "ContabilidadMCA" })">Reversion de Cierre</a></li>
+                                </ul>
+                            </li>
+                        }
+                        @if (!User.IsInRole("ADMINISTRADOR"))
+                        {
+                            <li>
+                                <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-format-float-none"></i><span class="hide-menu">Reportes</span></a>
+                                <ul aria-expanded="false" class="collapse pulse animated" style="width:300px">
+                                    <li><a href="@Url.Action("Index", "TipoReportes", new { Area = "Informes", keyReport = 0 })"> Balance General</a></li>
+                                    <li><a href="@Url.Action("Index", "TipoReportes", new { Area = "Informes", keyReport = 1 })"> Estado de Resultado</a></li>
+                                    @*<li><a href="@Url.Action("Index", "TipoReportes", new { Area = "Informes", keyReport = 2  })"> Estado de la Situación Financiera</a></li>*@
+                                    <li><a href="@Url.Action("Index", "TipoReportes", new { Area = "Informes", keyReport = 3 })"> Balanza de Comprobación</a></li>
+                                    <li><a href="@Url.Action("Index", "TipoReportes", new { Area = "Informes", keyReport = 4 })"> Auxiliar Detalle</a></li>
+                                    <li><a href="@Url.Action("Index", "TipoReportes", new { Area = "Informes", keyReport = 5 })"> Auxiliar Mayor</a></li>
+                                    <li><a href="@Url.Action("Index", "TipoReportes", new { Area = "Informes", keyReport = 6 })"> Libro Diario</a></li>
+                                    <li><a href="@Url.Action("Index", "TipoReportes", new { Area = "Informes", keyReport = 9 })"> Situacion Financiera</a></li>
+                                </ul>
+                            </li>
+                        }
+                        @*@if (Session["Rol"].ToString() == "ADMINISTRADOR")*@
+                        @if (User.IsInRole("ADMINISTRADOR"))
+                        {
+                            <li>
+                                <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-account-settings-variant"></i><span class="hide-menu"> Administración de Usuarios</span></a>
+                                <ul aria-expanded="false" class="collapse pulse animated">
+                                    <li><a href="@Url.Action("RegistroUsuarios", "AdministracionUsuarios", new { Area = "Seguridad" })">Registros de Usuarios</a></li>
+                                    <li><a href="@Url.Action("AdministracionUser", "AdministracionUsuarios", new { Area = "Seguridad" })">Administración de Usuarios</a></li>
+                                </ul>
+                            </li>
+                        }
+
+                        <li>
+                            <a class="has-arrow" href="" aria-expanded="false"><i class="mdi mdi-clippy"></i><span class="hide-menu">Ayuda</span></a>
+                            <ul>
+                                <li>
+                                    <a href="~/Ayuda/ManualMCA.pdf" aria-expanded="false"><i class="mdi mdi-clippy"></i><span class="hide-menu">Manual del Sistema</span></a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <li>
+                            <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-format-float-none"></i><span class="hide-menu">Seguridad</span></a>
+                            <ul aria-expanded="false" class="collapse pulse animated" style="width:300px">
+                                <li><a href="@Url.Action("ChangePassword", "Account", new { Area = "" })"> Cambiar Contraseña</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation-->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+
+        <div class="page-wrapper" id="contenido">
+            <input type="hidden" name="pathRoot" value="@string.Format("{0}{1}", Request.Url.GetLeftPart(UriPartial.Authority), Request.ApplicationPath)" />
+            <div>
+                @*<div id="contenido" style="padding-top:1em;">*@
+                <div style="padding-top:1em;">
+                    @RenderBody()
+                </div>
+            </div>
+            <footer class="footer" style="background-color:#346cb0; color:#fff"> © Sistema Contable para Módulos Comunitarios de Adoquinado - División de Tecnología de la Información</footer>
+        </div>
+
+    </div>
+
+
+
+    <!-- ============================================================== -->
+    <!-- Plugins for this page -->
+    <!-- ============================================================== -->
+    <!-- Plugin JavaScript -->
+    <script src="~/Content/Plantilla_MaterialPro/assets/plugins/moment/moment.js"></script>
+    <script src="~/Content/Plantilla_MaterialPro/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+    <!-- Clock Plugin JavaScript -->
+    <script src="~/Content/Plantilla_MaterialPro/assets/plugins/clockpicker/dist/jquery-clockpicker.min.js"></script>
+    <!-- Color Picker Plugin JavaScript -->
+    <script src="~/Content/Plantilla_MaterialPro/assets/plugins/jquery-asColorPicker-master/libs/jquery-asColor.js"></script>
+    <script src="~/Content/Plantilla_MaterialPro/assets/plugins/jquery-asColorPicker-master/libs/jquery-asGradient.js"></script>
+    <script src="~/Content/Plantilla_MaterialPro/assets/plugins/jquery-asColorPicker-master/dist/jquery-asColorPicker.min.js"></script>
+
+    <!-- Date Picker Plugin JavaScript -->
+    <script src="~/Content/Plantilla_MaterialPro/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+
+    <!-- Date range Plugin JavaScript -->
+
+    <script src="~/Content/Plantilla_MaterialPro/assets/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+    <script src="~/Content/Plantilla_MaterialPro/assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="~/Content/Plantilla_MaterialPro/assets/plugins/switchery/dist/switchery.min.js"></script>
+    <script src="~/Content/Plantilla_MaterialPro/assets/plugins/select2/dist/js/select2.full.min.js" type="text/javascript"></script>
+    <script src="~/Content/Plantilla_MaterialPro/assets/plugins/bootstrap-select/bootstrap-select.min.js" type="text/javascript"></script>
+    <script src="~/Content/Plantilla_MaterialPro/assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+    <script src="~/Content/Plantilla_MaterialPro/assets/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="~/Content/Plantilla_MaterialPro/assets/plugins/multiselect/js/jquery.multi-select.js"></script>
+    <script src="~/Content/Plantilla_MaterialPro/js/jquery.PrintArea.js"></script>
+    <script src="~/Content/Plantilla_MaterialPro/assets/plugins/echarts/echarts-all.js"></script>
+    <script src="~/Content/Plantilla_MaterialPro//assets/plugins/dropify/dist/js/dropify.min.js"></script>
+    <script src="~/Content/Plantilla_MaterialPro/assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+
+    <script src="~/Scripts/Personal/localStorageJS.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+

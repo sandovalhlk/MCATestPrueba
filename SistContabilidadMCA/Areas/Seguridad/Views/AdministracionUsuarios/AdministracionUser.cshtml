@@ -1,0 +1,106 @@
+﻿
+@{
+    ViewBag.Title = "AdministracionUser";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+@section scripts{
+<script src="~/Areas/Seguridad/Scripts/AdministracionUsuarios/ListUsuario.js"></script>
+    }
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { area = "", id = "formAdministracionUser" }))
+{
+    <input type="hidden" id="usuarioId" value="" />
+    <input type="hidden" id="estadoIdConsult" value="" />
+    
+    <div class="container-fluid">
+        <div style="padding-top:1em;">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-outline-naranja">
+                            <h5 class="m-b-0 text-white">Administración de Usuarios</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+
+                                <div id="btnSeleccion" class="row">
+                                    <div class="col-md-12">
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <button id="btnUserAct" type="button" class="btn btn-success">Activos</button>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <button id="btnUserInact" type="button" class="btn btn-success">Inactivos</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12" id="listUsuarios"> </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+      /*****************Modal para agregar Movimientos**********************/
+    <div id="modalModificarUser" class="modal fade in" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-lg bg-info">
+            <div class="modal-content">
+                <div class="modal-header bg-info">
+                    @*<button type="button" class="close" data-dismiss="modal">×</button>*@
+                    <h4 class="modal-title panel-title2 text-white"> Edición de usuario</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="bloqueado" value="" />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="row">
+                                    
+                                    <label class="col-md-2 control-label pull-right">Usuario Login</label>
+                                    <div class="col-md-4">
+                                        <input type="text" id="login" value="" class="form-control" />
+                                    </div>
+                                    <div  class="col-md-2"></div>
+                                    <div class="col-md-4">
+                                        <button type="button" id="desbloquear"class="btn btn-warning">Desbloquear/Bloquear</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label class="col-md-2 control-label">Estado</label>
+                                    <div class="col-md-4">
+                                        @Html.DropDownList("estadoId", ViewBag.SelectEstado as SelectList, "***Seleccione una Opcion***", htmlAttributes: new { @class = "form-control modificacion", @readonly = "readonly", @required = "required", @data_val = "true", @data_val_required = "Campo Requerido" })
+                                    </div>
+                                    <label class="col-md-2 control-label">ROL</label>
+                                    <div class="col-md-4">
+                                        @Html.DropDownList("Id", ViewBag.SelectRol as SelectList, "***Seleccione un ROL***", htmlAttributes: new { @class = "form-control modificacion", @readonly = "readonly", @required = "required", @data_val = "true", @data_val_required = "Campo Requerido" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnModUser" class="btn btn-default">Guardar</button>
+                        <button type="button" class="btn btn-inverse" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+

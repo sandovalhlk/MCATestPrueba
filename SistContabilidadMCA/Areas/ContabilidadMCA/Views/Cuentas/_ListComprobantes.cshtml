@@ -1,0 +1,109 @@
+﻿@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "ListComprobantes";
+        settings.CallbackRouteValues = new { Controller = "Cuentas", Action = "ListComprobantes" };
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.SettingsPager.PageSizeItemSettings.Visible = true;
+        settings.SettingsPager.EllipsisMode = PagerEllipsisMode.OutsideNumeric;
+        settings.SettingsPager.PageSize = 20;
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRowMenu = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        //settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.NextColumn;
+        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Visible;
+        //settings.Theme = "Metropolis Blue";
+        settings.KeyFieldName = "comprobanteId";
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(50);
+            column.FixedStyle = GridViewColumnFixedStyle.Left;
+            column.SetDataItemTemplateContent(container =>
+            {
+                var comprobanteId = DataBinder.Eval(container.DataItem, "comprobanteId");
+
+                ViewContext.Writer.Write(string.Format("<a class='' title='Edicion del Comprobante' data-toggle='tooltip' data-placement='rigth' href='{0}'><i class='btn btn-info fa fa-pencil-square-o'></i></a>", Url.Action("AddComprobante", "Cuentas",new { comprobanteId })));
+            });
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(50);
+            column.FixedStyle = GridViewColumnFixedStyle.Left;
+            column.SetDataItemTemplateContent(container =>
+            {
+                var comprobanteId = DataBinder.Eval(container.DataItem, "comprobanteId");
+                ViewContext.Writer.Write(string.Format("<a class='' title='Anular Comprobante' data-toggle='tooltip' data-placement='rigth' onclick='return fnAnularComprobante({0})'><i class='btn btn-danger fa fa-ban'></i></a>", comprobanteId));
+            });
+        });
+
+        settings.Columns.Add(column =>
+        {
+
+
+            column.PropertiesEdit.DisplayFormatString = "d";
+            column.Caption = "Fecha";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            column.FieldName = "fechaComprobante";
+            column.SortOrder = DevExpress.Data.ColumnSortOrder.Ascending;
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Tipo";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(15);
+            column.FieldName = "TipoComprobantes.tipoComprobante";
+            column.SortOrder = DevExpress.Data.ColumnSortOrder.Ascending;
+        });
+
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "N° Comprobante";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(15);
+            column.FieldName = "numero";
+            column.FixedStyle = GridViewColumnFixedStyle.Left;
+            column.SortOrder = DevExpress.Data.ColumnSortOrder.Ascending;
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Referencia";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(65);
+            column.FieldName = "concepto";
+          
+        });
+
+        
+        
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "N° Cheque";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(15);
+            column.FieldName = "numCheque";
+          
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Beneficiario";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(30);
+            column.FieldName = "beneficiario";
+
+        });
+
+      
+
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

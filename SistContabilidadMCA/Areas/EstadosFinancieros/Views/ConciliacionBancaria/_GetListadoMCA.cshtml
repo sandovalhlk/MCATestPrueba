@@ -1,0 +1,44 @@
+﻿@*<h4 class="box-title"> Listado de Proyectos de la UCR - @ViewBag.ucr</h4>*@
+@if (Model != null)
+{
+    <div class="table-responsive m-t-40" style="margin-top:10px">
+        <table id="myTableArea" class="display nowrap table table-hover table-bordered stylish-table" cellspacing="0" width="100%" style="font-size:12px">
+            <thead style="color:#000;">
+                <tr>
+                    <th style="text-align:center"></th>
+                    <th style="text-align:center"></th>
+                    <th style="text-align:center">Fecha Conciliación</th>
+                    <th style="text-align:center">Saldo en Banco</th>
+                    <th style="text-align:center">Partida de Conciliación</th>
+                    <th style="text-align:center">Saldo en Libro</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr style="color:#263238;">
+                        @if (User.IsInRole("CONTADOR"))
+                        {
+                            @*<a class='' title='Administración de Acuerdos Suplementarios' data-toggle='tooltip' data-placement='rigth' href='' onclick='return fnDetalleProyecto({0})'><i class='btn btn-info fa fa-folder-o'></i></a>", moduloMCAId));*@
+                            <td style="text-align:center" width="60"><a class="btn btn-info btn-circle btn-sm" onclick="return fnSetEditConciliacion(@item.conciliacionBancariaId)"><i class="mdi mdi-reorder-horizontal" style="color:#fff;"></i></a></td>
+                        }
+                        @if (User.IsInRole("PROMOTOR") || User.IsInRole("CONTADOR"))
+                        {
+                            <td style="text-align:center" width="60" id="btnPrintComp"><a class="btn fa fa-print btn-danger pull-right" onclick="return fnSetImprimir(@item.conciliacionBancariaId)"></a></td>
+                            @*<button id="btnPrintComp" type="button" class="btn fa fa-print btn-danger pull-right" title='Imprimir Comprobante' data-toggle='tooltip' style="font-size:medium"></button>*@
+
+                        }
+                        <td style="text-align:center">@string.Format("{0:d}", @item.fechaTransaccion)</td>
+                        <td style="text-align:center">@String.Format("{0:#,##0.00}", @item.saldoEstadoCuentaBanco)</td>
+                        <td style="text-align:center">@String.Format("{0:#,##0.00}", @item.partidaConsiliacion)</td>
+                        <td style="text-align:center">@String.Format("{0:#,##0.00}", @item.saldoenLibro)</td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+}
+

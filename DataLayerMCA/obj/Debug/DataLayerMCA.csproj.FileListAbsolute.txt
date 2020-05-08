@@ -1,0 +1,14 @@
+D:\PROYECTOS PARA PUBLICACION\SistContabilidadMCA\DataLayerMCA\bin\Debug\DataLayerMCA.dll.config
+D:\PROYECTOS PARA PUBLICACION\SistContabilidadMCA\DataLayerMCA\bin\Debug\DataLayerMCA.dll
+D:\PROYECTOS PARA PUBLICACION\SistContabilidadMCA\DataLayerMCA\bin\Debug\DataLayerMCA.pdb
+D:\PROYECTOS PARA PUBLICACION\SistContabilidadMCA\DataLayerMCA\bin\Debug\EntityFramework.dll
+D:\PROYECTOS PARA PUBLICACION\SistContabilidadMCA\DataLayerMCA\bin\Debug\EntityFramework.SqlServer.dll
+D:\PROYECTOS PARA PUBLICACION\SistContabilidadMCA\DataLayerMCA\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+D:\PROYECTOS PARA PUBLICACION\SistContabilidadMCA\DataLayerMCA\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\PROYECTOS PARA PUBLICACION\SistContabilidadMCA\DataLayerMCA\bin\Debug\EntityFramework.xml
+D:\PROYECTOS PARA PUBLICACION\SistContabilidadMCA\DataLayerMCA\bin\Debug\EntityFramework.SqlServer.xml
+D:\PROYECTOS PARA PUBLICACION\SistContabilidadMCA\DataLayerMCA\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+D:\PROYECTOS PARA PUBLICACION\SistContabilidadMCA\DataLayerMCA\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\PROYECTOS PARA PUBLICACION\SistContabilidadMCA\DataLayerMCA\obj\Debug\DataLayerMCA.dll
+D:\PROYECTOS PARA PUBLICACION\SistContabilidadMCA\DataLayerMCA\obj\Debug\DataLayerMCA.pdb
+D:\PROYECTOS PARA PUBLICACION\SistContabilidadMCA\DataLayerMCA\obj\Debug\DataLayerMCA.csprojResolveAssemblyReference.cache

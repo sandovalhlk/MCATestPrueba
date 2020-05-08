@@ -1,0 +1,122 @@
+﻿@using Microsoft.AspNet.Identity
+
+<style>
+    .dropdown-menu {
+        padding: 0;
+    }
+</style>
+@if (Request.IsAuthenticated)
+{
+    <ul class="navbar-nav">
+        <li id="perfilId" class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size:12px;"><img src="~/Content/Plantilla_MaterialPro/images/usuario.png" alt="user" class="profile-pic" /></a>
+            <div class="dropdown-menu dropdown-menu-right scale-up">
+                <ul class="dropdown-user">
+                    <li>
+                        <div class="card dw-user-box" style="margin:0; padding:0">
+                            <img class="" src="~/Content/Plantilla_MaterialPro/images/profile-bg.jpg" alt="Card image cap">
+                            <div class="card-body little-profile text-center">
+                                <div class="pro-img"><img src="~/Content/Plantilla_MaterialPro/images/usuario.png" alt="user"></div>
+                                <h3 class="m-b-0">@User.Identity.Name.ToString()</h3>
+                                <hr />
+                                <span id="rolActualLbl" ></span>
+                                <hr />
+                                @using (Html.BeginForm("LogOff", "Account", new { Area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "" }))
+                                {
+                                    <p></p><a href="javascript:document.getElementById('logoutForm').submit()" class="m-t-10 waves-effect waves-dark btn btn-danger btn-md btn-rounded" style="color:#fff">Cerrar Sesión</a>
+                                }
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+}
+
+    @*@using SecurityWebAspIdentity
+
+        @if (Request.IsAuthenticated)
+        {
+            ApplicationUser toUsuarioAct = (ApplicationUser)Session["usuario"];
+            //var UsuarioDatos = GetListaEmpleadosBL.GetEmpleadoById(Convert.ToInt32(toUsuarioAct.keyEmpleadoCatalogo));
+
+
+            <nav class="navbar navbar-static-top">
+                <!-- Toggles -->
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <!-- Nav Header User img -->
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+
+
+                                @Html.ActionLink("Bienvenido " + User.Identity.Name + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", style = "color:#F8F4F3;" })
+
+                            </a>
+
+                                <li class="user-header">
+                                    <img src="~/Content/img/usuario.png" class="img-circle" alt="User Image">
+                                    <p>
+
+                                    </p>
+                                </li>
+                                <!-- Menu Body -->
+                                <li class="user-body">
+                                    <div class="row">
+                                        <div class="col-xs-12 text-center">
+                                            <a href="#">Rol del Sistema: @Session["rolName"]</a>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 text-center">
+                                            <a href="@Url.Action("ChangePassword","Account", new { area = "" })" style="color: #0048a5 !important;" class="btn btn-link" title="Pulsa aquí para cambiar tú contraseña actual.">** Cambiar mi contraseña **</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+
+                                    <div class="pull-right">
+                                        @using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <a href="javascript:document.getElementById('logoutForm').submit()" data-original-title="Cerrar Sesión" data-toggle="tooltip" class="btn btn-sm btn-danger" style="color: #fff;padding: 5px;"><i class="fa fa-power-off"></i> &nbsp;Cerrar Sesión</a>
+                                        }
+                                    </div>
+                                </li>
+
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        }*@
+
+    @*@using Microsoft.AspNet.Identity
+        @if (Request.IsAuthenticated)
+        {
+            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+            {
+            @Html.AntiForgeryToken()
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                </li>
+                <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+            </ul>
+            }
+        }
+        else
+        {
+            <ul class="nav navbar-nav navbar-right">
+                <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+            </ul>
+        }*@

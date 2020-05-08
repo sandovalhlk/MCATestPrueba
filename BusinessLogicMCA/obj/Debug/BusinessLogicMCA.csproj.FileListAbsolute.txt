@@ -1,0 +1,14 @@
+D:\PROYECTOS PARA PUBLICACION\SistContabilidadMCA\BusinessLogicMCA\bin\Debug\BusinessLogicMCA.dll.config
+D:\PROYECTOS PARA PUBLICACION\SistContabilidadMCA\BusinessLogicMCA\bin\Debug\BusinessLogicMCA.dll
+D:\PROYECTOS PARA PUBLICACION\SistContabilidadMCA\BusinessLogicMCA\bin\Debug\BusinessLogicMCA.pdb
+D:\PROYECTOS PARA PUBLICACION\SistContabilidadMCA\BusinessLogicMCA\bin\Debug\DataLayerMCA.dll
+D:\PROYECTOS PARA PUBLICACION\SistContabilidadMCA\BusinessLogicMCA\bin\Debug\EntityFramework.dll
+D:\PROYECTOS PARA PUBLICACION\SistContabilidadMCA\BusinessLogicMCA\bin\Debug\EntityFramework.SqlServer.dll
+D:\PROYECTOS PARA PUBLICACION\SistContabilidadMCA\BusinessLogicMCA\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+D:\PROYECTOS PARA PUBLICACION\SistContabilidadMCA\BusinessLogicMCA\bin\Debug\DataLayerMCA.pdb
+D:\PROYECTOS PARA PUBLICACION\SistContabilidadMCA\BusinessLogicMCA\bin\Debug\EntityFramework.xml
+D:\PROYECTOS PARA PUBLICACION\SistContabilidadMCA\BusinessLogicMCA\bin\Debug\EntityFramework.SqlServer.xml
+D:\PROYECTOS PARA PUBLICACION\SistContabilidadMCA\BusinessLogicMCA\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+D:\PROYECTOS PARA PUBLICACION\SistContabilidadMCA\BusinessLogicMCA\obj\Debug\BusinessLogicMCA.csprojResolveAssemblyReference.cache
+D:\PROYECTOS PARA PUBLICACION\SistContabilidadMCA\BusinessLogicMCA\obj\Debug\BusinessLogicMCA.dll
+D:\PROYECTOS PARA PUBLICACION\SistContabilidadMCA\BusinessLogicMCA\obj\Debug\BusinessLogicMCA.pdb

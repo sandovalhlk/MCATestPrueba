@@ -1,0 +1,131 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+@section scripts{
+<script src="~/Scripts/Personal/jquery.blockUI.js"></script>
+    <script src="~/Areas/ContabilidadMCA/Scripts/Cuentas/Index.js"></script>
+
+}
+@if (User.IsInRole("CONTADOR"))
+{
+using (Html.BeginForm(null, null, FormMethod.Post, new { area = "", id = "formCatCuentas" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="container-fluid">
+        <div style="padding-top:1em;">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header bg-info">
+                            <h5 class="m-b-0 text-white">Catalogo de Cuentas</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12" style="padding-bottom:60px">
+                                <input type="button" id="btnPrintCatalogo" class="btn btn-info pull-right" style="margin-right:10px" value="Imprimir Catalogo" />
+                                <input type="button" id="btnGenerarCatalogo" class="btn btn-info pull-right" style="margin-right:10px" value="Crear Catalogo" />
+                                
+                            </div>
+                            <div id="" class="row">
+                                @Html.Action("TListCatalogoCuentas", "Cuentas")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    /*****************************************
+     * Modal para Agregar y editar Cuentas
+     * ***********************************/
+    <div id="ModalAddEditCuenta" class="modal fade in" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header card-info">
+                    <input type="hidden" id="cuentaPadreId" value="" />
+                    <input type="hidden" id="cuentaId" value="" />
+                    <h4 class="modal-title panel-title2 text-white" > @*<img src="~/Content/img/paneles/archivo.png" class="panel-iconheader" />*@ Registro de Cuentas</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="row">
+                                    <label class="control-label col-md-2">Modulo MCA</label>
+                                    <div class="col-md-10">
+                                        @Html.TextBox("moduloMCA", null, new { @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label class="control-label col-md-2">Codigo Padre</label>
+                                    <div class="col-md-4">
+                                        @Html.TextBox("codigoPadre", null, new { @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                    <label class="control-label col-md-2">Cuenta Padre</label>
+                                    <div class="col-md-4">
+                                        @Html.TextArea("cuentaPadre", null, new { @class = "form-control", @readonly = "readonly" })
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label class="control-label col-md-2">Tipo Cuenta</label>
+                                    <div class="col-md-4">
+                                        @Html.TextBox("tipoCuenta", null, new { @class = "form-control", @readonly = "readonly" })
+                                        
+                                    </div>
+                                    <label class="control-label col-md-2">Naturaleza</label>
+                                    <div class="col-md-4">
+                                        @Html.TextBox("naturaleza", null, new { @class = "form-control", @readonly = "readonly" })
+                                        
+                                    </div>
+                                </div>
+                                </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label class="control-label col-md-2">Codigo Cuenta</label>
+                                    <div class="col-md-4">
+                                        @Html.TextBox("codigo", null, new { @class = "form-control", @readonly = "readonly" })
+                                        
+                                    </div>
+                                    <label class="control-label col-md-2">Nombre Cuenta</label>
+                                    <div class="col-md-4">
+                                        @Html.TextArea("descripcion", null, new { @class = "form-control" })
+                                        @Html.ValidationMessage("descripcion", "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="checkbox checkbox-success col-md-4 pull-right" style="margin-left:10px">
+                                            <input id="Cuentabanco" type="checkbox" />
+                                            <label for="Cuentabanco">Desea definir esta cuenta como *cuenta bancaria*?</label>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnModalGuardar" class="btn btn-default">Guardar Registro</button>
+                        <button type="button" id="btnCerrar" class="btn btn-inverse" >Cerrar</button>
+                    </div>
+                </div>
+        </div>
+    </div>
+}
+} else
+{
+<div>
+    <h1> ACCESO NO AUTORIZADO. NO TIENE PERMISOS PARA ACCEDER A ESTA PANTALLA</h1>
+</div>
+ }

@@ -1,0 +1,50 @@
+﻿    .card-outline-naranja {
+       background-color: #1565C0;
+   }
+    /******/
+    
+.bg {
+  position: relative;
+  height: 200px;
+  width: 400px;
+  padding: 4px;
+  /*background: #dc1a1a;*/
+  background: #42741d;
+  
+  overflow: hidden;
+}
+.bg:after,
+.bg:before {
+  position: absolute;
+  content: '';
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  transform-origin: right top;
+}
+.bg:before {
+  top: 0px;
+  
+  background: #3c6931;
+  /*background: #d01812;*/
+  transform: skewY(-45deg);
+}
+.bg:after {
+  top: -100%;
+  
+  background: #5ba843;
+  /*background: #c31a09;*/
+  transform: skewY(-15deg);
+}
+/*span {
+  position: relative;
+  z-index: 2;
+}*/
+
+/* Just for demo */
+.bg:hover {
+  height: 200px;
+  width: 410px;
+}
+
+

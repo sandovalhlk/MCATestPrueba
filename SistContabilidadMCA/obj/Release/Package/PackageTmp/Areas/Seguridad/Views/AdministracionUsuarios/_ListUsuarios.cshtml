@@ -1,0 +1,96 @@
+﻿@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "ListUsuarios";
+        settings.CallbackRouteValues = new { Controller = "AdministracionUsuarios", Action = "ListUsuarios" };
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.SettingsPager.PageSizeItemSettings.Visible = true;
+        settings.SettingsPager.EllipsisMode = PagerEllipsisMode.OutsideNumeric;
+        settings.SettingsPager.PageSize = 20;
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRowMenu = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        //settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.NextColumn;
+        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Visible;
+        //settings.Theme = "Metropolis Blue";
+        settings.KeyFieldName = "usuarioId";
+
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(50);
+            //column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            column.FixedStyle = GridViewColumnFixedStyle.Left;
+            column.SetDataItemTemplateContent(container =>
+            {
+                var Id = DataBinder.Eval(container.DataItem, "usuarioId");
+                ViewContext.Writer.Write(string.Format("<button class='btn btn-primary fa fa-cog' title='Modificar Usuario' data-toggle='tooltip' data-placement='rigth' onclick='return EditUser({0})'></button>", Id));
+            });
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Usuario Login";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(45);
+            column.FieldName = "userName";
+            //column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            column.FixedStyle = GridViewColumnFixedStyle.Left;
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Nombre";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(45);
+            column.FieldName = "nombres";
+
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Apellidos";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(45);
+            column.FieldName = "apellidos";
+
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Cedula";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            column.FieldName = "cedula";
+
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Estado";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            column.FieldName = "estado";
+
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Bloqueado";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            column.FieldName = "bloqueado";
+
+        });
+
+
+
+        settings.ClientSideEvents.BeginCallback = @"function (s, e) {
+                                                    e.customArgs['estadoId']= $('#estadoIdConsult').val();}";
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+
+

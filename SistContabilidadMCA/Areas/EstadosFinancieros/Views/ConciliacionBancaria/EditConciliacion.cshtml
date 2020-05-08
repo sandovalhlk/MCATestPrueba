@@ -1,0 +1,237 @@
+﻿
+@using DataLayerMCA
+@using BusinessLogicMCA
+@model ModulosMCA
+@{
+    ViewBag.Title = "DetalleConciliacion";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+    ModulosMCA toModulosMCA = (ModulosMCA)ViewBag.mca;
+
+}
+
+@section scripts{
+    <script src="~/Areas/EstadosFinancieros/Script/createEdit.js"></script>
+    <script src="~/Areas/EstadosFinancieros/Script/EditConciliacion.js"></script>
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { area = "", id = "formEditDetalleConciliacion", @class = "form-horizontal form-label-left" }))
+{
+    <input type="hidden" id="cuentaId" value="@ViewBag.cuentaId">
+    <input type="hidden" id="bancoId" value="@ViewBag.bancoId">
+    <input type="hidden" id="conciliacionBanId" value="@ViewBag.conciliacionBanId">
+    <input type="hidden" id="saldoBD" value="@ViewBag.saldo">
+    @Html.AntiForgeryToken()
+    <div class="container-fluid">
+        <div style="padding-top:1em;">
+            <div class="row">
+                <div class="col-md-10" style="margin-left:100px">
+                    <div class="card">
+                        <div class="card-header card-outline-naranja">
+                            <h5 class="m-b-0 text-white">Estados Financieros</h5>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">Conciliación Bancaria <a class="get-code" data-toggle="collapse" href="#pgr2" aria-expanded="true"><i class="mdi mdi-buffer" style="color:#455a64"></i></a></h4>
+                            <div class="progress m-t-20">
+                                <div class="progress-bar bg-success" style="width: 5%; height:15px;" role="progressbar" id="barProgress">0%</div>
+                            </div>
+                            <hr />
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item"> <a class="nav-link" id="tabConciliacion"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down"><i class="mdi mdi-library-books"></i>&nbsp;&nbsp;Datos de la Conciliación Bancaria</span></a> </li>
+                                <li class="nav-item"> <a class="nav-link" id="tabrevision"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down"><i class="mdi mdi-spellcheck"></i>&nbsp;&nbsp;Revisión total</span></a> </li>
+                                @*<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#revision" role="tab"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down"><i class="mdi mdi-spellcheck"></i>&nbsp;&nbsp;Revisión total</span></a> </li>*@
+                            </ul>
+                            <div class="tab-content tabcontent-border">
+                                <div class="tab-pane active" id="Conciliacion" role="tabpanel" aria-expanded="true">
+                                    <div class="card-body" id="FormNewConciliacion">
+                                        <hr />
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h3> &nbsp;<b class="font-bold">Información General</b></h3>
+                                                <hr>
+                                                <div class="pull-left">
+                                                    <address>
+                                                        @*<p class="text-muted m-l-5">*@
+                                                        <P>
+                                                            <span> Convenio </span>@toModulosMCA.Proyectos.Convenios.convenio
+                                                            <br><span> Proyecto </span>@toModulosMCA.Proyectos.nombreProyecto
+                                                            <br><span> Módulo </span>@toModulosMCA.nombreModuloMCA
+                                                            <br><span> Módulo N° </span>@toModulosMCA.numContrato
+
+                                                        </P>
+                                                    </address>
+                                                </div>
+                                                <div class="pull-right text-right">
+                                                    <address>
+                                                        <p>
+                                                            <span> Departamento </span>@toModulosMCA.Departamentos.departamento
+                                                            <br><span> Municipio </span>@toModulosMCA.Municipios.municipio
+                                                            <br><span> Cuenta Corriente N° </span>@ViewBag.ucr
+                                                        </p>
+                                                    </address>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <h3> &nbsp;<b class="font-bold">Datos de la Conciliación</b></h3>
+                                                <hr>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <label class="col-md-3 control-label">Conciliación Bancaria Al:</label>
+                                                    <div class="input-group date col-md-4">
+                                                        <input type="text" class="form-control datepicker" id="fechaTransaccion" name="fechaTransaccion" value="@ViewBag.fecha" required="required" data-val-required="Campo requerido." disabled />
+                                                        <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <label class="col-md-3 control-label">Saldos según Bancos(C$)</label>
+                                                    <div class="col-md-4">
+                                                        <input id="monto" name="monto" class="form-control decimalComma text-danger" placeholder="monto en números" value="@ViewBag.saldoEstado" type="text" required maxlength="300" onchange="calcular_saldo();">
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <label class="col-md-3 control-label">Cheques Flotantes</label>
+                                                    <div class="col-md-4" id="sumatoria">
+                                                        <input id="suma" name="suma" class="form-control decimalComma text-danger" type="text" readonly>
+                                                    </div>
+                                                    @*<div class="col-md-3" style="margin-top:5px">
+                                                            <a href="" class="btn btn-success btn-sm pull-right" onclick='return creartabla();'><i class="fa fa-star" aria-hidden="true"></i> Generar Detalle de cheque</a>
+                                                        </div>*@
+                                                </div>
+                                                <br />
+                                                <div class="card" id="Formtable" style="display:block">
+                                                    <div class="card-body">
+
+                                                        <div class="col-md-12">
+                                                            <br />
+                                                            <h3><b>Detalle de Cheques Flotantes</b> </h3>
+                                                            <hr>
+                                                            <div class="table table-hover" style="clear: both;">
+                                                                <table class="table table-hover" id="Cheques"></table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="checkbox checkbox-success" style="margin-left:10px">
+                                                        <input id="menosPartidaConc" type="checkbox" onclick="calcular_saldo()" />
+                                                        <label for="menosPartidaConc">Aplicar Menos la Partida de Conciliación</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <label class="col-md-3 control-label" style="font:x-small">Partida de Conciliación:</label>
+                                                    <div class="col-md-4">
+                                                        <input id="partidaConsiliacion" name="partidaConsiliacion" class="form-control decimalComma text-danger" placeholder="" type="text" required maxlength="200" value="@ViewBag.partida" onchange="calcular_saldo();">
+                                                    </div>
+                                                </div>
+
+                                                <br />
+                                                <div class="row">
+                                                    <label class="col-md-3 control-label" style="font:x-small">Saldos según libro (C$)</label>
+                                                    <div class="col-md-4">
+                                                        <input id="Slibro" name="Slibro" class="form-control decimalComma text-danger" type="text" value="@ViewBag.saldo" readonly>
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div class="row">
+                                                    <div class="col-md-2"></div>
+                                                    <div class="col-md-7" style="margin-left:70px">
+                                                        <div class="button-group">
+                                                            <a class="btn btn-success pull-right" id="btn_siguiente" onclick="return DetalleTramiteE()" style="color:#fff">Avanzar</a>
+                                                            <a class="btn btn-danger pull-right" id="btn_atras" onclick="return fnRegresoConciliacion()" style="margin-right:0.5em; color:#fff">Regresar</a>
+                                                            @*@Html.ActionLink("Regresar", "Conciliacion", "ConciliacionBancaria", new { @class = "btn btn-success pull-right" })*@
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane p-20" id="revision" role="tabpanel" aria-expanded="false">
+                                    <div class="card card-body printableArea">
+                                        <h3><b class="text-blue">DETALLE DE LA CONCILIACION BANCARIA</b> </h3>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="pull-left">
+                                                    <address>
+                                                        <h3> &nbsp;<b class="font-bold">Información del Módulo</b></h3>
+                                                        <hr>
+
+                                                        <p class="text-muted m-l-5">
+                                                        <P>
+                                                        <P>
+                                                            <span> Proyecto </span>@toModulosMCA.Proyectos.nombreProyecto
+                                                            <br><span> Módulo </span>@toModulosMCA.nombreModuloMCA
+                                                            <br><span> Departamento </span>@toModulosMCA.Departamentos.departamento
+                                                            <br><span> Municipio </span>@toModulosMCA.Municipios.municipio
+                                                            <br><span> Módulo N° </span>@toModulosMCA.Proyectos.Convenios.convenio
+
+
+                                                        </P>
+                                                    </address>
+                                                </div>
+                                                <div class="pull-right text-right">
+                                                    <address>
+                                                        <h4 class="font-bold">Datos de la Conciliación</h4>
+                                                        <hr>
+                                                        <p>
+                                                            <span class="m-t-30"><b> Conciliación Bancaria Al:&nbsp; &nbsp;</b><i class="fa fa-calendar" id="fconciliacion"></i></span>
+                                                            @*<br><span class="m-t-30"><b> Deslinde:  &nbsp;</b><i class="fa fa-calendar" id="deslinde"></i></span>*@
+                                                        </p>
+                                                        <p>
+                                                            <span>Saldo según Banco:&nbsp;<small id="sbanco"></small></span>
+                                                            <br><span>Cheques Flotantes:&nbsp;<small id="chequesF"></small></span>
+                                                            <br><span>Partida de Conciliación:&nbsp;<small id="pconciliacion"></small></span>
+                                                            <br><span>Saldos en Libros:&nbsp;<small id="saldoL"></small></span>
+                                                        </p>
+
+                                                    </address>
+                                                </div>
+
+                                            </div>
+                                            <br>
+                                            <div class="col-md-12">
+                                                <br />
+                                                <h3><b>Detalle de Cheques Flotante</b> </h3>
+                                                <hr>
+                                                <div class="table-responsive m-t-40" style="clear: both;">
+                                                    <table class="table table-hover" id="chequesSeleccionados"></table>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="clearfix"></div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-md-2"></div>
+                                                    <div class="col-md-7" style="margin-left:70px">
+                                                        <div class="button-group">
+                                                            <a class="btn fa fa-print btn-info pull-right" id="print1" onclick="return fnSetImprimir(@ViewBag.conciliacionBanId)" style="display:none" margin-right:0.5em; color:#fff"> Imprimir</a>
+                                                            <a class="btn btn-info pull-right" id="btnEjecutar1" onclick="return fnEjecutarConciliacionEdit()" style="display:none" margin-right:0.5em; color:#fff">Ejecutar Conciliación</a>
+                                                            <button type="button" class="btn btn-success pull-right" id="btn_RegistrarCita" onclick="return RegistrarConciliacionD()" style="color:#fff"><i class="fa fa-save"></i> Registrar Conciliación</button>
+                                                            <a class="btn btn-danger pull-right" id="btn_atras1" onclick="return fnRegreso()" style="margin-right:0.5em; color:#fff">Regresar</a>
+                                                            <a class="btn btn-danger pull-right" id="btn_regresar2" onclick="return fnRegresoConciliacion()" style="display:none" margin-right:0.5em; color:#fff">Regresar</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+}

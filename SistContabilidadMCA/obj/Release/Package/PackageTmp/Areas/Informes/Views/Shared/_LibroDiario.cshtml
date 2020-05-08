@@ -1,0 +1,43 @@
+﻿<div class="form-body">
+    <h4 class="card-title">Seleccione el Rango de fechas:</h4>
+    <hr />
+    <div class="row p-t-5">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">Del</label>
+                <input class="form-control" type="date" name="fecha1" id="fecha1">
+            </div>
+        </div>
+        <!--/span-->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">al</label>
+                <input class="form-control" type="date" name="fecha2">
+            </div>
+        </div>
+    </div>
+    <div class="row p-t-5">
+        <div class="col-md-10">
+            <div class="form-group">
+                <h4 class="card-title">Exportarlo a:</h4>
+                <hr />
+                <div class="demo-radio-button">
+                    <div class="col-md-10">
+                        <input name="tipoExportacion" type="radio" id="Excel" class="with-gap radio-col-light-blue" value="1">
+                        <label for="Excel">Microsoft Excel</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input name="tipoExportacion" type="radio" id="PDF" class="with-gap radio-col-light-blue" checked="" value="2">
+                        <label for="PDF">PDF</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-actions" id="botonera">
+        @*<button type="submit" class="btn btn-default"> <i class="fa fa-save"></i> Generar Reporte</button>*@
+        <button id="btnGenerarRep" type="button" class="btn btn-inverse"> <i class="fa fa-save"></i> Generar Reporte</button>
+    </div>
+</div>
+
+

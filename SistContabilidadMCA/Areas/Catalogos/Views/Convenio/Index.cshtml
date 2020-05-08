@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+@section styles{
+    <style>
+        #myTableArea_filter, #myTableArea_info, #myTableArea_previous, #myTableArea_next, .stylish-table thead th {
+            color: #346cb0;
+        }
+
+        .btn-circle.btn-sm {
+            width: 25px;
+            height: 25px;
+            padding: 0;
+            font-size: 15px;
+        }
+
+        #ModalEmpresaTamaño {
+            top: 5%;
+            width: 600px;
+            outline: none;
+            overflow: hidden;
+        }
+    </style>
+}
+
+@section scripts {
+    <script src="~/Areas/Catalogos/Script/Catalogos/Convenio/Index.js"></script>
+    <script src="~/Scripts/Personales/FocusInput.js"></script>
+}
+
+<div class="container-fluid">
+    <div style="padding:2em">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card ">
+                    <div class="card-header card-outline-naranja">
+                        <h5 class="m-b-0 text-white">Convenio</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row container-fluid">
+                            <button type="button" class="btn btn-warning pull-right" onclick="return fnOpenModal('#ModalConvenio', true, false);"><i class="fa fa-star" aria-hidden="true"></i> Nuevo Convenio</button>
+                        </div>
+                        <div id="divconvenio">
+                            @Html.Action("GetListaConvenios")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { area = "", id = "formNuevoConvenio" }))
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="tipoFormulario" value="0" id="tipoFormulario" />
+        <!-- Modal -->
+        @Html.Partial("_CreateEdit")
+    }

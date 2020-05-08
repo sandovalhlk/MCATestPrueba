@@ -1,0 +1,29 @@
+﻿
+
+<div class="table-responsive m-t-40" style="margin-top:10px">
+    <table id="myTable" class="display nowrap table table-hover table-bordered stylish-table" cellspacing="0" width="100%" style="font-size:12px">
+        <thead style="color:#000;">
+            <tr>
+                <th style="text-align:center"></th>
+                <th style="text-align:center">Nombre del Proyecto</th>
+                <th style="text-align:center">Nombre del Módulo</th>
+                <th style="text-align:center">Código de la Cuenta</th>
+                <th style="text-align:center">Descripción Cuenta</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.toCuentaUcr)
+            {
+                <tr style="color:#263238;">
+
+                    <td style="text-align:center" width="60"><a class="btn btn-info btn-circle btn-sm" onclick="return fnconciliaciones(@item.cuentaId)"><i class="mdi mdi-reorder-horizontal" style="color:#fff;"></i></a></td>
+                    <td style="text-align:center">@item.nombreProyecto</td>
+                    <td style="text-align:center">@item.nombreModuloMCA</td>
+                    <td style="text-align:center">@item.codigo</td>
+                    <td style="text-align:center">@item.descripcion</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

@@ -1,0 +1,230 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+@section scripts {
+    <script src="~/Areas/Catalogos/Script/Catalogos/Proyectos/Index.js"></script>
+    <script src="~/Areas/Catalogos/Script/Catalogos/Convenio/Index.js"></script>
+    @*<script src="~/Scripts/Personales/FocusInput.js"></script>*@
+    <script src="~/Scripts/plugins/select2/select2.min.js"></script>
+    <script src="~/Scripts/plugins/select2/select2_init.js"></script>
+}
+@*@if (Session["Rol"].ToString() == "PROMOTOR")
+{*@
+@if (User.IsInRole("PROMOTOR"))
+{
+    using (Html.BeginForm(null, null, FormMethod.Post, new { area = "", id = "formIndexMCA" }))
+    {
+    <input id="ucrId" type="hidden" value="" />
+    <div class="container-fluid">
+        <div style="padding-top:1em;">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-outline-naranja">
+                            <h5 class="m-b-0 text-white">Administración de Proyectos</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="container-fluid">
+                                <div class="col-md-12" style="padding-bottom:60px">
+                                    <button type="button" id="btnnuevo" class="btn btn-warning pull-right" onclick="return fnOpenModal('#ModalProyecto', true, false);"><i class="fa fa-star" aria-hidden="true"></i> Nuevo Proyecto </button>
+                                </div>
+                                <div id="ViewGeneral" class="row" style="margin-left:100px">
+                                    <div class="col-md-12">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                @if (ViewBag.ucrsusuario == 1)
+                                                {
+                                                <div class="col-md-4">
+                                                    <div class="row el-element-overlay">
+                                                        <div class="card">
+                                                            <div class="el-card-item">
+                                                                <div class="el-overlay-1">
+                                                                    <img src="~/Content/img/bm2.png" alt="user" />
+                                                                    <div class="el-overlay">
+                                                                        <ul class="el-info">
+                                                                            <li><input id="UcrBM" type="button" class="btn btn-warning" value="Ver Listado" /></li>                                                                          
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>                                                               
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                }
+                                                else if (ViewBag.ucrsusuario == 2)
+                                                {
+                                                <div class="col-md-4">
+                                                    <div class="row el-element-overlay">
+                                                        <div class="card">
+                                                            <div class="el-card-item">
+                                                                <div class="el-overlay-1">
+                                                                    <img src="~/Content/img/bcie.png" alt="user" />                                                                   
+                                                                    <div class="el-overlay">
+                                                                        <ul class="el-info">
+                                                                            <li><input id="UcrBCIE" type="button" class="btn btn-warning" value="Ver Listado" /></li>                                                                          
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>                                                              
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                }
+                                                else if (ViewBag.ucrsusuario == 3)
+                                                {
+                                                <div class="col-md-4">
+                                                    <div class="row el-element-overlay">
+                                                        <div class="card">
+                                                            <div class="el-card-item">
+                                                                <div class="el-overlay-1">
+                                                                    <img src="~/Content/img/rv.png" alt="user" />                                                                   
+                                                                    <div class="el-overlay">
+                                                                        <ul class="el-info">
+                                                                            <li><input id="UcRV" type="button" class="btn btn-warning" value="Ver Listado" /></li>                                                                         
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>                                                               
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                           
+                            <p id="divucr" style="display:none"><b>Listado de Proyectos de la UCR - @ViewBag.ucr</b></p>
+                            <div class="card-body">
+                                <div id="ViewListaMCA" class="row">
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+      <!-- Modal para Proyecto-->
+    using (Html.BeginForm(null, null, FormMethod.Post, new { area = "", id = "formNuevoProyecto" }))
+    {
+        @Html.AntiForgeryToken()
+        <!-- Modal -->
+        <div id="ModalProyecto" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog modal-lg modalRedondo">
+                @*<div class="">*@
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color:#346cb0">
+                            <div style="display:none" id="divEdicion">
+                                <h6 class="modal-title" style="color:#fff"><i class="mdi mdi-reorder-horizontal"></i>&nbsp;&nbsp;Edición del Proyecto</h6>
+                            </div>
+                            <div style="display:block" id="divNuevo">
+                                <input type="hidden" name="proyectoId" id="proyectoId" value="0" />
+                                <h6 class="modal-title" style="color:#fff"><i class="mdi mdi-reorder-horizontal"></i>&nbsp;&nbsp;Nuevo Proyecto</h6>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            @*<div class="col-md-12">*@
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input id="nombreProyecto" name="nombreProyecto" class="form-control" placeholder="Nombre del Proyecto" type="text"  maxlength="500">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Longitud (KM)</label>
+                                        <input id="longuitud" name="longuitud" class="form-control decimalComma" placeholder="Longitud del Proyecto" type="text"  maxlength="300">
+                                    </div>
+                                </div>
+                                @*<div class="col-md-6">*@
+                                <div class="col-md-6 ">
+                                    <label class="control-label">Convenio</label>
+                                    <div class="col-md-12 form-group" style="padding:0px">
+                                        @Html.DropDownList("convenioId", ViewBag.convenio as SelectList, "Seleccione un Item", new { @required = "required", @style = "width: 85%;", @id = "convenioId", @class = "select2" })
+                                        <button class="btn btn-info" onclick="return fnOpenModal('#ModalConvenio', true, false);"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+
+                                @*</div>*@
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Monto (C$)</label>
+                                        <input id="monto" name="monto" class="form-control decimalComma" placeholder="monto en números" type="text"  maxlength="300">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
+                                            UCR <span class="required"></span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            @Html.DropDownList("ucrId", ViewBag.ucrs as SelectList, "Seleccione un Item", new { @required = "required", @style = "width: 230%;", @id = "ucrIds" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label class="col-md-2 control-label">Fecha Inicio</label>
+                                    <div class="input-group date col-md-4">
+                                        <input type="text" class="form-control datepicker" id="fechaInicio" name="fechaInicio" value="" required="required" data-val-required="Campo requerido." />
+                                        <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                    <label class="col-md-2 control-label">Fecha Fin </label>
+                                    <div class="input-group date col-md-4">
+                                        <input type="text" class="form-control datepicker" id="fechaFin" name="fechaFin" value="" required="required" data-val-required="Campo requerido." />
+                                        <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-1" style="display:none" id="divBaja">
+                                    <label class="control-label">Opción</label>
+                                    <button type="button" class="btn waves-effect waves-light btn-sm btn-danger" onclick="return fnBajaDataP()"> <i class="mdi mdi-sim-off"></i> Anular</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" id="btnGuardarP" class="btn btn-corres1"><i class="fa fa-save"></i> Guardar</button>
+                            <button type="button" class="btn btn-inverse" onclick="return fncloseModalP()"><i class="mdi mdi-close-circle"></i> Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    }
+
+          <!-- Modal para Proyecto-->
+    using (Html.BeginForm(null, null, FormMethod.Post, new { area = "", id = "formNuevoConvenio" }))
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="tipoFormulario" value="1" id="tipoFormulario" />
+        <!-- Modal -->
+        @Html.Partial("~/Areas/Catalogos/Views/Convenio/_CreateEdit.cshtml")
+
+        }
+    }
+
+    }
+    else
+    {
+        <div>
+            <h1>ACCESO NO AUTORIZADO. NO TIENE PERMISOS PARA ACCEDER A ESTA PANTALLA</h1>
+        </div>
+    }
+
+
+

@@ -1,0 +1,131 @@
+﻿
+@{
+    ViewBag.Title = "CierresContables";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+@section scripts{
+    <script src="~/Scripts/Personal/jquery.blockUI.js"></script>
+    <script src="~/Areas/ContabilidadMCA/Scripts/Cuentas/cierresContables.js"></script>
+}
+
+<link href="~/Content/PersonalStyle/StyleGeneral.css" rel="stylesheet" />
+@if (User.IsInRole("CONTADOR"))
+{
+    using (Html.BeginForm(null, null, FormMethod.Post, new { area = "", id = "formCierres" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <input type="hidden" id="ultimoCierre" value=@ViewBag.ultimoCierre />
+        <input type="hidden" id="mesCierre" value=@ViewBag.mesCierre />
+        <input type="hidden" id="anioCierre" value=@ViewBag.cierreAnual />
+        <div class="container-fluid">
+            <div style="padding-top:1em;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card"  style="margin-bottom: 0px;">
+                            <div class="card-header card-outline-naranja" style="background-color:#346cb0">
+                                <h5 class="m-b-0 text-white font-weight-bold">CALCULO DE SALDOS</h5>
+                                <h5 class="m-b-0 text-white pull-right"> ♦♦♦♦♦ El mes correspondiente a realizar CALCULO DE SALDOS ó ASENTAR es : <span id="mesCierreView">@ViewBag.mesCierre</span>  ♦♦♦♦♦</h5>
+                            </div>
+                        </div>
+                     
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6 col-lg-4">
+                                                <div class="card card-body bg" style="padding-bottom: 40px;padding-top: 40px;">
+
+                                                    <div class="form-group">
+                                                        <div class="col-md-2">
+                                                            <button id="btnCalcularSaldos" class="btn btn-lg btn-warning waves-effect waves-light" type="button"><span class="btn-label"><i class="fa fa-cog"></i></span>Calcular Saldos</button>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <div class="col-md-2">
+                                                            <button id="btnCierreMensual" class="btn btn-lg btn-info waves-effect waves-light" type="button"><span class="btn-label"><i class="fa fa-cog"></i></span>Asentamiento Mensual</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-4">
+                                                <div class="card card-body bg" style="padding-bottom: 40px;padding-top: 40px;">
+                                                    <div class="form-group">
+                                                        <div class="col-md-2">
+                                                            <button id="btnCalculoAnual" class="btn btn-lg btn-warning waves-effect waves-light" type="button"><span class="btn-label"><i class="fa fa-cog"></i></span>Calculo Cierre Anual</button>
+
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-md-2">
+                                                            <button id="btnCierreAnual" class="btn btn-lg btn-info waves-effect waves-light" type="button"><span class="btn-label"><i class="fa fa-cog"></i></span>Cierre Anual</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-4">
+                                                <div class="card card-body bg" style="padding-bottom: 40px;padding-top: 40px;">
+                                                    <div class="form-group">
+                                                        <div class="col-md-2">
+                                                            <button id="btnCalculoTotal" class="btn btn-lg btn-warning waves-effect waves-light" type="button"><span class="btn-label"><i class="fa fa-cog"></i></span>Calculo Cierre Contable</button>
+
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-md-2">
+                                                            <button id="btnCierreContable" class="btn btn-lg btn-info waves-effect waves-light" type="button"><span class="btn-label"><i class="fa fa-cog"></i></span>Cierre Contabilidad</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            /*****************Modal para Cierres contables **********************/
+            <div id="modalCierre" class="modal fade in" role="dialog" data-keyboard="false" data-backdrop="static">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header card-info">
+                            <h4 class="modal-title panel-title2 text-white"> Ejecucion de Cierre Contable</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <input type="hidden" id="cuentaId" name="cuentaId" value="" />
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+
+                                            </div>
+                                            <label class="col-md-2 control-label ">Mes y Año de Cierre<span class="required">*</span></label>
+                                            <div class="input-group date col-md-4">
+                                                <input type="text" class="form-control datepicker" id="fechaTransaccion" name="fechaTransaccion" value="" required="required" data-val-required="Campo requerido." />
+                                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="btnEjecutarCierre" class="btn btn-default">Ejecutar</button>
+                                <button type="button" class="btn btn-inverse" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            }
+
+            }

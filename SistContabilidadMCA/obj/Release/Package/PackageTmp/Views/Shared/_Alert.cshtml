@@ -1,0 +1,74 @@
+﻿
+@model AlertType
+@{
+
+    /** Establecer clases para iconos y alert de bloque de JavaScript **/
+    string css = "", classIcon = "";
+    switch (Model.type)
+    {
+        case AlertType.TypeAlert.success:
+            css = "success"; classIcon = "fa-check-circle";
+            break;
+        case AlertType.TypeAlert.info:
+            css = "info"; classIcon = "fa-exclamation-circle";
+            break;
+        case AlertType.TypeAlert.warning:
+            css = "warning"; classIcon = "fa-exclamation-triangle";
+            break;
+        case AlertType.TypeAlert.danger:
+            css = "danger"; classIcon = "fa-times-circle";
+            break;
+    }
+}
+
+
+@if (Model.showBlockJS == false) /* Mandar un alert de HTML  */
+{
+    <div class="alert alert-@css">
+        @*<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>*@
+        <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+        @if (Model.itemsLista != null && string.IsNullOrEmpty(Model.mensaje))
+        {
+            if (Model.itemsLista.Count > 0)
+            {
+                Model.mensaje = "<ul>";
+                foreach (var item in Model.itemsLista)
+                {
+                    Model.mensaje += "<li>" + item + "</li>";
+                }
+                Model.mensaje += "</ul>";
+            }
+        }
+
+        @if (Model.showIcon) /* Si se desea a mandar a presentar el icono segun el tipo de presentación de alerta */
+        {
+            <p><strong><i class="fa @classIcon"></i>&nbsp; @Html.Raw(Model.mensaje) </strong></p>
+        }
+        else
+        {
+            @Html.Raw(Model.mensaje)
+        }
+    </div>
+}
+else /* Si en vez de mandar un alert de HTML se presentara creara un bloque de Javascrip segun parametro de mensaje */
+{
+    if (Model.showAlertJS == false)
+    {
+        IHtmlString str = new HtmlString(Model.mensaje);
+        <script type='text/javascript'>@Html.Raw(str)</script>
+    }
+    else
+    {
+        css = (Model.type == AlertType.TypeAlert.danger ? "error" : css);
+        IHtmlString str = new HtmlString(Model.mensaje);
+        <script type='text/javascript'>
+            $(function () {
+                swal('', '@str', '@css');
+            })
+        </script>
+    }
+}
+
+
+
+

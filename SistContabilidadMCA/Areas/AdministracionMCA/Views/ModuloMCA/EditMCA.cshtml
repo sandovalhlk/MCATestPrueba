@@ -1,0 +1,176 @@
+﻿@model DataLayerMCA.ModulosMCA
+
+@{
+    ViewBag.Title = "EditMCA";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+@section scripts{
+<script src="~/Areas/AdministracionMCA/Script/ModulosMCA/Generales.js"></script>
+<script src="~/Areas/AdministracionMCA/Script/ModulosMCA/EditMCA.js"></script>
+<script src="~/Scripts/plugins/select2/select2.min.js"></script>
+<script src="~/Scripts/plugins/select2/select2_init.js"></script>
+}
+
+@if (ViewBag.SolicitudGuardada != null)
+{
+    @Html.Partial("_Alert", new AlertType() { mensaje = (string)ViewBag.SolicitudGuardada, showBlockJS = true, showAlertJS = true, type = AlertType.TypeAlert.success, showIcon = true })
+
+    <input type="hidden" name="tipoFormulario" value="2" id="tipoFormulario" />
+
+}
+@if (User.IsInRole("PROMOTOR"))
+{
+    using (Html.BeginForm(null, null, FormMethod.Post, new { area = "", id = "formEditMCA" }))
+    {
+    @Html.Hidden("moduloMCAId")
+    <input id="ucrId" type="hidden" value="" />
+    
+    <input id="usuarioId" type="hidden" value="" />
+    <input id="Eval" type="hidden" value=@ViewBag.Eval />
+        
+
+    <div class="container-fluid">
+        <div style="padding-top:1em;">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-outline-naranja">
+                            <h5 class="m-b-0 text-white">Creación de Módulos MCA</h5>
+                        </div>
+                        <div class="card-body">
+                          
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <label class="col-md-2 control-label">Nombre MCA</label>
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.nombreModuloMCA, new { htmlAttributes = new { @class = "form-control Modificacion", @readonly = "readonly", @required = "required", @data_val = "true", @data_val_required = "Campo Requerido", @placeholder = "Nombre del Modulo MCA" } })
+                                            </div>
+                                          </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <label class="col-md-2 control-label">RUC</label>
+                                             <div class="col-md-4">
+                                                 @Html.EditorFor(model => model.ruc, new { htmlAttributes = new { @class = "form-control Modificacion", @readonly = "readonly", @required = "required", @maxlength = "30", @data_val = "true", @data_val_required = "Campo Requerido", @placeholder = "N° Ruc del MCA" } })
+                                             </div>
+                                            <label class="col-md-2 control-label">Proyecto</label>
+                                            <div class="col-md-4">
+                                                @Html.DropDownListFor(model => model.proyectoId, ViewBag.proyectos as SelectList, "***Seleccione una Opcion***", htmlAttributes: new { @class = "form-control Modificacion", @readonly = "readonly", @required = "required", @data_val = "true", @data_val_required = "Campo Requerido" })
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                           
+                                            <label class="col-md-2 control-label">Departamento</label>
+                                            <div class="col-md-4">
+                                                @Html.DropDownListFor(model => model.departamentoId, ViewBag.departamentos as SelectList, "***Seleccione una Opcion***", htmlAttributes: new { @class = "form-control Modificacion", @readonly = "readonly", @required = "required", @data_val = "true", @data_val_required = "Campo Requerido" })
+                                            </div>
+                                            <label class="col-md-2 control-label">Municipio</label>
+                                            <div class="col-md-4">
+                                                @Html.DropDownListFor(model => model.municipioId, ViewBag.municipios as SelectList, "***Seleccione una Opcion***", htmlAttributes: new { @class = "form-control Modificacion", @readonly = "readonly", @required = "required", @data_val = "true", @data_val_required = "Campo Requerido" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <label class="col-md-2 control-label">N° Contrato</label>
+                                            <div class="col-md-4">
+                                                @Html.EditorFor(model => model.numContrato, new { htmlAttributes = new { @class = "form-control Modificacion", @readonly = "readonly", @maxlength = "30", @required = "required", @data_val = "true", @data_val_required = "Campo Requerido", @placeholder = "N° de Contrato del MCA" } })
+                                            </div>
+                                            <label class="col-md-2 control-label">Longuitud</label>
+                                            <div class="col-md-4">
+                                                @Html.EditorFor(model => model.longuitud, new { htmlAttributes = new { @class = "form-control Modificacion", @readonly = "readonly", @type = "number", @step = "any", @required = "required", @maxlength = "18", @data_val = "true", @data_val_required = "Campo Requerido", @placeholder = "Longuitud del MCA" } })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <label class="col-md-2 control-label">Monto</label>
+                                            <div class="col-md-4">
+                                                @Html.EditorFor(model => model.monto, new { htmlAttributes = new { @class = "form-control decimalComma Modificacion", @readonly = "readonly", @required = "required", @data_val = "true", @data_val_required = "Campo Requerido", @placeholder = "Monto del Modulo MCA" } })
+                                               
+                                            </div>
+                                            <label class="col-md-2 control-label">Fecha Inicio Contabilidad</label>
+                                            <div class="input-group date col-md-4">
+                                                <input type="text" class="form-control datepicker Modificacion" id="fechaConstitucion" name="fechaConstitucion" value="@(Model == null ? DateTime.Now.ToShortDateString() : Model.fechaConstitucion.ToShortDateString())" required="required" data-val-required="Campo requerido." />
+                                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <label class="col-md-2 control-label">Fecha Incio MCA</label>
+                                            <div class="input-group date col-md-4">
+                                                <input type="text" class="form-control datepicker Modificacion" id="fechaInicio" name="fechaInicio" value="@(Model == null ? DateTime.Now.ToShortDateString() : Model.fechaInicio.ToShortDateString())" required="required" data-val-required="Campo requerido." />
+                                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                            <label class="col-md-2 control-label">Fecha Fin MCA</label>
+                                            <div class="input-group date col-md-4">
+                                                <input type="text" class="form-control datepicker Modificacion" id="fechaFin" name="fechaFin" value="@(Model == null ? DateTime.Now.ToShortDateString() : Model.fechaFin.ToShortDateString())" required="required" data-val-required="Campo requerido." />
+                                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <label class="col-md-2 control-label">Periodo Fiscal Incio</label>
+                                            <div class="input-group date col-md-4">
+                                                <input type="text" class="form-control datepicker Modificacion" id="pFiscalInicio" name="pFiscalInicio" value="@(Model == null ? DateTime.Now.ToShortDateString() : Model.pFiscalInicio.ToShortDateString())" required="required" data-val-required="Campo requerido." />
+                                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                            <label class="col-md-2 control-label">Periodo Fiscal Fin</label>
+                                            <div class="input-group date col-md-4">
+                                                <input type="text" class="form-control datepicker Modificacion" id="pFiscalFin" name="pFiscalFin" value="@(Model == null ? DateTime.Now.ToShortDateString() : Model.pFiscalFin.ToShortDateString())" required="required" data-val-required="Campo requerido." />
+                                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                            </div>                                           
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                         
+                            <div class="row" style="padding-top:20px">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-9">
+                                                <div id="jqxgridFirmantes" style="width:100%"></div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="col-md-12" style="padding-bottom:40px">
+                                                    <button id="btnAddFirmantes" class="btn btn-success Modificacion">Agregar Firmantes</button>
+                                                </div>
+                                                <div class="col-md-12" style="padding-bottom:40px">
+                                                    <button type="button" id="btnGuardarE" class="btn btn-default Modificacion">Guardar</button>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <button type="button" id="btnCancel" class="btn btn-inverse ">Cancelar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        /*****************Modal para agregar Firmantes**********************/
+    @Html.Partial("_PartialFirmantes")
+    }
+} else
+{    
+    <div>
+        <h1> ACCESO NO AUTORIZADO. NO TIENE PERMISOS PARA ACCEDER A ESTA PANTALLA</h1>
+       </div >
+ }

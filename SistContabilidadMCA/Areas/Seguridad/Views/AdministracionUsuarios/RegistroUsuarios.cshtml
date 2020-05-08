@@ -1,0 +1,136 @@
+﻿@{
+    ViewBag.Title = "RegistroUsuarios";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+
+@section styles{
+    <style>
+        #myTable_filter, #myTable_info, #myTable_previous, #myTable_next, .stylish-table thead th {
+            color: #346cb0;
+        }
+
+        .btn-circle.btn-sm {
+            width: 25px;
+            height: 25px;
+            padding: 0;
+            font-size: 15px;
+        }
+    </style>
+}
+@section scripts {
+    @*<script src="~/Areas/Correspondencia/Scripts/DataTables.js"></script>*@
+    <script src="~/Areas/Seguridad/Scripts/AdministracionUsuarios/RegistroUsuarios.js"></script>
+    <script src="~/Scripts/plugins/select2/select2.min.js"></script>
+    <script src="~/Scripts/plugins/select2/select2_init.js"></script>
+
+}
+@using (Html.BeginForm(null, null, FormMethod.Post, new { area = "", id = "formRegistroUsuario" }))
+{
+    <div class="container-fluid">
+        <div style="padding-top:1em;">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-outline-naranja">
+                            <h5 class="m-b-0 text-white">Registro de Usuarios</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Personal Directiva</label>
+                                            @Html.DropDownList("usuarioId", ViewBag.SelectUserMCA as SelectList, "Seleccione el Usuario", new { @required = "required", @style = "width: 93%; color: #37474F;", @class = "select2" })
+                                            <button type="button" style="margin-bottom:10px;" class="btn waves-effect waves-light btn-sm btn-success" onclick="return fnOpenModal('#ModalPersonalDirectiva', true, false);"> <i class="mdi mdi-plus"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Rol</label>
+                                            @Html.DropDownList("RolId", ViewBag.SelectRolMCA as SelectList, "Seleccione el ROL", new { @required = "required", @style = "color: #37474F;", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Nombre de Usuario</label>
+                                            <input id="nombreUser" name="nombreUser" class="form-control" placeholder="Ingrese el nombre de Usuario" type="text" required maxlength="100">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Email</label>
+                                            <input id="Email" name="Email" class="form-control" placeholder="Ingrese el Email" type="text" required maxlength="50">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">UCR </label>
+                                            @Html.DropDownList("ucrId", ViewBag.SelectUcr as SelectList, "Seleccione la UCR", new { @required = "required", @style = "color: #37474F;", @class = "form-control" })
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div id="divRoles">
+                                    @*@Html.Action("GetListaRoles")*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-inverse"><i class="fa fa-save"></i> Registrar</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+<!-- Modal -->
+<div id="ModalPersonalDirectiva" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg modalRedondo">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#346cb0">
+                <h6 class="modal-title" style="color:#fff"><i class="mdi mdi-reorder-horizontal"></i>&nbsp;&nbsp;Registro Personal Directiva</h6>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div class="row">
+                        <label class="col-md-2 control-label">No Cédula<span class="required">*</span></label>
+                        <div class="col-md-4">
+                            <input type="text" id="cedula" value="" class="form-control cedula" />
+                        </div>
+                        <div class="col-md-2" style="padding:0px">
+                            <button type="button" class="btn btn-info" tyle="text-align:left" title="Buscar No. de Cédula" id="btnCargarCedula"><i class="fa fa-binoculars"></i> </button>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <label class="col-md-2 control-label">Nombres<span class="required">*</span></label>
+                        <div class="col-md-4">
+                            <input type="text" id="nombres" value="" class="form-control" disabled />
+                        </div>
+
+                        <label class="col-md-2 control-label">Apellidos<span class="required">*</span></label>
+                        <div class="col-md-4">
+                            <input type="text" id="apellidos" value="" class="form-control" disabled />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnGuardarPersonalDirectiva" class="btn btn-info" disabled><i class="fa fa-save"></i> Guardar</button>
+                <button type="button" class="btn btn-inverse" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+

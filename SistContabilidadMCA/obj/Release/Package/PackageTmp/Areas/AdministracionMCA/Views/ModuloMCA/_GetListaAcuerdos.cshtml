@@ -1,0 +1,107 @@
+﻿
+@{
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GetListaAcuerdos";
+        settings.CallbackRouteValues = new { Controller = "ModuloMCA", Action = "GetListaAcuerdos" };
+
+        settings.KeyFieldName = "acuerdoSupMCAId";
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.SettingsPager.PageSizeItemSettings.Visible = true;
+        settings.SettingsPager.EllipsisMode = PagerEllipsisMode.OutsideNumeric;
+        settings.SettingsPager.PageSize = 20;
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRowMenu = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.NextColumn;
+        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Visible;
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(50);
+            column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            column.SetDataItemTemplateContent(container =>
+            {
+                var acuerdoSupMCAId = DataBinder.Eval(container.DataItem, "acuerdoSupMCAId");
+                ViewContext.Writer.Write(string.Format("<a class='' title='Editar Acuerdo Suplementario' data-toggle='tooltip' data-placement='rigth' href='' onclick='return fnEditAcuerdo({0})'><i class='btn btn-primary fa fa-cog'></i></a>", acuerdoSupMCAId));
+            });
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            column.Caption = "N° Acuerdo";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(15);
+            column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+            column.FieldName = "numero";
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            column.Caption = "Descripción";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(35);
+            column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+            column.FieldName = "descripcion";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            column.Caption = "Tipo de Extensión";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(15);
+            column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+            column.FieldName = "tipoExtencion";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            column.Caption = "Monto (C$)";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(15);
+            column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+            column.FieldName = "monto";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            column.Caption = "Longitud (KM)";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(15);
+            column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+            column.FieldName = "loguitud";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            column.Caption = "Fecha Inicial";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+            column.FieldName = "fechaInicial";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            column.Caption = "Fecha Final";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+            column.FieldName = "fechaFinal";
+        });
+
+        //funcion que permite refrescar el grid en base al parametro
+        settings.ClientSideEvents.BeginCallback = @"function (s,e) {
+                                                   e.customArgs['moduloMCAId']=$('#moduloMCAId').val();}";
+
+
+        //foreach (GridViewDataColumn column in settings.Columns)
+        //    column.SettingsHeaderFilter.Mode = GridHeaderFilterMode.CheckedList;
+    });
+
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

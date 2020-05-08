@@ -1,0 +1,102 @@
+﻿@{
+    var treeList = Html.DevExpress().TreeList(settings =>
+    {
+        settings.Name = "TreeList";
+        settings.CallbackRouteValues = new { Controller = "Cuentas", Action = "TListCatalogoCuentas" };
+
+        settings.SettingsPager.Visible = true;
+        settings.AutoGenerateColumns = false;
+        settings.KeyFieldName = "cuentaId";
+        settings.ParentFieldName = "jerarquia";
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Cuenta";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            column.FieldName = "codigo";
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Descripcion";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(35);
+            column.FieldName = "descripcion";
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Naturaleza";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(35);
+            column.FieldName = "naturaleza";
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Saldo";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(25);
+            column.FieldName = "";
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = " ";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            column.SetDataCellTemplateContent(container =>
+            {
+                var nivel = DataBinder.Eval(container.DataItem, "nivel").ToString();
+                var codSuperAvit = DataBinder.Eval(container.DataItem, "codigo").ToString();
+                if (nivel == "4")
+                {
+                    var cuentaId = DataBinder.Eval(container.DataItem, "cuentaId").ToString(); //El segundo valor del value del boton es opcion -1 para adicion
+                    ViewContext.Writer.Write(string.Format("<button type='button'  id='btnAddCuenta' class='btn btn-warning fa fa-plus btn-grid' onclick='AddEditCuenta({0},{1})' title='Agregar Cuenta Detalle' > </button>", cuentaId, -1));
+                }
+
+                if (nivel == "5" && codSuperAvit != "3-1-1-01-01")
+                {
+                    var cuentaId = DataBinder.Eval(container.DataItem, "cuentaId").ToString();
+                    var jerarquia = DataBinder.Eval(container.DataItem, "jerarquia").ToString();
+                    ViewContext.Writer.Write(string.Format("<button type='button'  id='btnEditCuenta' class='btn btn-success fa fa-edit btn-grid' onclick='AddEditCuenta({0},{1})' title='Editar Nombre Cuenta Detalle' > </button>", cuentaId, jerarquia));
+                }
+
+            });
+        });
+
+        //settings.Columns.Add(column =>
+        //{
+        //    column.Caption = " ";
+        //    column.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        //    column.SetDataCellTemplateContent(container =>
+        //    {
+
+        //        var nivel = DataBinder.Eval(container.DataItem, "nivel").ToString();
+        //        var codSuperAvit = DataBinder.Eval(container.DataItem, "codigo").ToString();
+        //            if (nivel=="5" && codSuperAvit!="3-1-1-01-01")
+        //            {
+        //                var cuentaId = DataBinder.Eval(container.DataItem, "cuentaId").ToString();
+        //                var jerarquia = DataBinder.Eval(container.DataItem, "jerarquia").ToString();
+        //                //ViewContext.Writer.Write(string.Format("<button type='button'  id='btnAddCuenta' class='btn btn-success fa fa-plus btn-grid' title='Agregar Cuenta Detalle' value='{0}'> </button>", cuentaId));
+        //                ViewContext.Writer.Write(string.Format("<button type='button'  id='btnEditCuenta' class='btn btn-success fa fa-edit btn-grid' onclick='AddEditCuenta({0},{1})' title='Editar Nombre Cuenta Detalle' > </button>", cuentaId, jerarquia));
+        //            }
+
+        //        });
+        //});
+
+
+        settings.PreRender = (sender, e) =>
+        {
+            if (Session["TreeListState"] == null)
+                ((MVCxTreeList)sender).ExpandToLevel(2);
+        };
+        // settings.SettingsSelection.Enabled = true;
+
+    });
+    if (ViewData["EditError"] != null)
+    {
+        if (ViewData.Model.Count > 0)
+        {
+            treeList.SetEditErrorText((string)ViewData["EditError"]);
+        }
+    }
+
+}
+@treeList.Bind(Model).GetHtml()

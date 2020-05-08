@@ -1,0 +1,55 @@
+﻿<div class="form-body">
+    <h4 class="card-title">Seleccione el Periodo:</h4>
+    <hr />
+    <div class="row p-t-5">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">Al</label>
+                <input class="form-control" type="date" name="fecha1" id="fecha1">
+            </div>
+        </div>
+        <!--/span-->
+
+    </div>
+    @*<div class="row p-t-5">
+        <div class="col-md-10">
+            <h4 class="card-title">Seleccione el tipo de Reporte:</h4>
+            <hr />
+            <div class="demo-radio-button">
+                <div class="col-md-10">
+                    <input name="tipoReporte" type="radio" id="BPreliminar" class="with-gap radio-col-light-blue" checked="" value="1">
+                    <label for="Correspondencia">Balance General Preliminar</label>
+                </div>
+                <div class="col-md-10">
+                    <input name="tipoReporte" type="radio" id="BOficial" class="with-gap radio-col-light-blue" value="2">
+                    <label for="Seguimiento">Balance General Oficial</label>
+                </div>
+            </div>
+        </div>
+    </div>*@
+    <div class="row p-t-5">
+        <div class="col-md-10">
+            <div class="form-group">
+                <h4 class="card-title">Exportarlo a:</h4>
+                <hr />
+                <div class="demo-radio-button">
+                    <div class="col-md-10">
+                        <input name="tipoExportacion" type="radio" id="Excel" class="with-gap radio-col-light-blue" value="1">
+                        <label for="Excel">Microsoft Excel</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input name="tipoExportacion" type="radio" id="PDF" class="with-gap radio-col-light-blue" checked="" value="2">
+                        <label for="PDF">PDF</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-actions" id="botonera">
+        @*<button type="submit" class="btn btn-corres1"> <i class="fa fa-save"></i> Generar Reporte</button>*@
+        <button id="btnGenerarRep" type="button" class="btn btn-inverse"> <i class="fa fa-save"></i> Generar Reporte</button>
+       
+    </div>
+</div>
+
+

@@ -1,0 +1,44 @@
+﻿@using BusinessLogicMCA
+@model DataLayerMCA.TipoExtensiones
+
+
+<div id="ModalTipoExtension" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+
+    <div class="modal-dialog modal-lg  modalRedondo" id="ModalTipoExtensionTamaño">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#346cb0">
+                <div style="display:none" id="divEdicion">
+                    <h6 class="modal-title" style="color:#fff"><i class="mdi mdi-reorder-horizontal"></i>&nbsp;&nbsp;Edición de los datos de tipo de Extensión</h6>
+                </div>
+
+                <div style="display:block" id="divNuevo">
+                    <input type="hidden" name="tipoExtensionId" id="tipoExtensionId" value="0" />
+                    <h6 class="modal-title" style="color:#fff"><i class="mdi mdi-reorder-horizontal"></i>&nbsp;&nbsp;Nuevo Tipo de Extensión</h6>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <label class="control-label">Tipo de Extensión</label>
+                                <input id="tipoExtencion" name="tipoExtencion" class="form-control" placeholder="Tipo de Extensión" type="text"  maxlength="100">
+                            </div>
+                        </div>
+                        <div class="col-md-1" style="display:none" id="divBaja">
+                            <label class="control-label">Opción</label>
+                            <button type="button" class="btn waves-effect waves-light btn-sm btn-danger" onclick="return fnBajaData()"> <i class="mdi mdi-sim-off"></i> Anular</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-corres1"><i class="fa fa-save"></i> Guardar</button>
+                <button type="button" class="btn btn-inverse" onclick="return fncloseModal();"><i class="mdi mdi-close-circle"></i> Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

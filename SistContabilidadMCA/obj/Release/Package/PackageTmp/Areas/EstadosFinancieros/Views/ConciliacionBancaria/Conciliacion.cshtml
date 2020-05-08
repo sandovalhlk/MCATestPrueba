@@ -1,0 +1,59 @@
+﻿
+
+@{
+    ViewBag.Title = "Conciliacion";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+@section scripts{
+    <script src="~/Areas/EstadosFinancieros/Script/Index.js"></script>
+    <script src="~/Areas/EstadosFinancieros/Script/Shared/DataTables.js"></script>
+    <script src="~/Areas/EstadosFinancieros/Script/createEdit.js"></script>
+}
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { area = "", id = "formconciliacion" }))
+{
+    <input id="ucrId" type="hidden" value="" />
+    <input type="hidden" id="cuentaId" value="@ViewBag.cuentaId">
+   
+
+
+        @Html.AntiForgeryToken()
+        <div class="container-fluid">
+            <div style="padding-top:1em;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header card-outline-naranja">
+                                <h5 class="m-b-0 text-white">Detalle de Conciliaciones Bancarias</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-horizontal">
+                                    @if (User.IsInRole("CONTADOR"))
+                                    {
+                                        <div class="col-md-12" style="padding-bottom:60px">
+                                            <button type="button" id="btnnuevo" class="btn btn-warning pull-right" onclick="return validarCuenta();"><i class="fa fa-star" aria-hidden="true"></i> Nueva Conciliación Bancaria </button>
+                                        </div>
+                                    }
+                                    <br />
+                                    <div class="x_title">
+                                        <h6 class="card-title"><strong>Conciliaciones Bancarias de la Cuenta de Banco  @ViewBag.numCuenta</strong></h6>
+
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="container-fluid">
+                                        <div id="divConciliacionB">
+                                            @Html.Action("GetListadoMCA")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+}
+}
+

@@ -1,0 +1,103 @@
+﻿@{
+    @*<h6 class="box-title"> Listado de Proyectos de la UCR - @(ViewBag.ucr != "" ? ViewBag.ucr : "123")  </h6>*@
+   
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridView1";
+        settings.CallbackRouteValues = new { Controller = "Catalogos", Action = "GetListaProyectos" };
+
+        settings.KeyFieldName = "ucrId";
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.SettingsPager.PageSizeItemSettings.Visible = true;
+        settings.SettingsPager.EllipsisMode = PagerEllipsisMode.OutsideNumeric;
+        settings.SettingsPager.PageSize = 10;
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRowMenu = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.NextColumn;
+        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Visible;
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(50);
+            column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            column.SetDataItemTemplateContent(container =>
+            {
+                var proyectoId = DataBinder.Eval(container.DataItem, "proyectoId");
+                ViewContext.Writer.Write(string.Format("<a class='' title='Administración de Proyectos' data-toggle='tooltip' data-placement='rigth' href='' onclick='return fnEditProyecto({0})'><i class='btn btn-info  fa fa-cog'></i></a>", proyectoId));
+            });
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            column.Caption = "Nombre del Proyecto";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(50);
+            column.FieldName = "nombreProyecto";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            column.Caption = "UCR";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(25);
+            column.FieldName = "ucr";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center; column.Caption = "Convenios";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(30);
+            column.FieldName = "convenio";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            column.Caption = "Monto";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            column.FieldName = "monto";
+
+        });
+        settings.Columns.Add(column =>
+        {
+            column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            column.Caption = "Longitud";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            column.FieldName = "longuitud";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            column.Caption = "Fecha Inicio";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            column.FieldName = "fechaInicio";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            column.Caption = "Fecha de Finalización";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            column.FieldName = "fechaFin";
+        });
+
+        //funcion que permite refrescar el grid en base al parametro
+        settings.ClientSideEvents.BeginCallback = @"function (s,e) {
+                                                   e.customArgs['ucrId']=$('#ucrId').val();
+                                               
+                                                
+
+}";
+
+        //foreach (GridViewDataColumn column in settings.Columns)
+        //    column.SettingsHeaderFilter.Mode = GridHeaderFilterMode.CheckedList;
+    });
+
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

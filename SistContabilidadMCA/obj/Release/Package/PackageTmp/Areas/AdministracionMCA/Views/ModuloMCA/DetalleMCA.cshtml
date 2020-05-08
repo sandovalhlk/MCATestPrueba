@@ -1,0 +1,172 @@
+﻿@using DataLayerMCA
+@using BusinessLogicMCA
+@model ModulosMCA
+@{
+    ViewBag.Title = "DetalleMCA";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+    ModulosMCA toModulos = (ModulosMCA)ViewBag.mca;
+}
+}
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/plugins/select2/select2.min.js"></script>
+    <script src="~/Scripts/plugins/select2/select2_init.js"></script>
+    <script src="~/Areas/AdministracionMCA/Script/ModulosMCA/index.js"></script>
+    <script src="~/Areas/Catalogos/Script/Catalogos/TipoExtension/Index.js"></script>
+}
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { area = "", id = "formAddAcuerdo", @class = "form-horizontal form-label-left" }))
+{
+    @*<input type="hidden" id="moduloMCAId" value="@ViewBag.moduloMCAId">*@
+    @Html.AntiForgeryToken()
+    <div class="container-fluid">
+        <div style="padding-top:1em;">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4 class="card-title">Acuerdos Suplementarios</h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="button-group">
+                                        <div class="row container-fluid" style="margin-right:150px">
+
+                                            @Html.ActionLink("Retornar", "Index", "ModuloMCA", new { @class = "btn btn-info btn-sm pull-right" })
+                                            @*<a href="" class="btn btn-success btn-sm pull-right" onclick='return Regresar();'><i class="fa fa-star" aria-hidden="true"></i> Retornar</a>*@
+                                            <a href="" class="btn btn-success btn-sm pull-right" onclick='return AparecerPanel();'><i class="fa fa-star" aria-hidden="true"></i> Nuevo Acuerdo Suplementario</a>
+                                            @*<a class="btn btn-success btn-sm pull-right" onclick='return AparecerPanel();'><i class="fa fa-star" aria-hidden="true"></i> Nuevo Acuerdo Suplementario</a>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <br />
+                            <div class="row" style="text-align:center">
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <label for="first-name">Nombre del MCA</label>
+                                        <input id="first-name" required="required" class="form-control col-md-7 col-xs-12" type="text" disabled value="@toModulos.nombreModuloMCA">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="text-align:center">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label for="last-name">N° de Contrato:</label>
+                                            <input id="last-name" name="last-name" required="required" class="form-control col-md-7 col-xs-12" type="text" disabled value="@ViewBag.mcaNumero">
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="card" id="FormNewAcuerdo" style="display:none">
+                        <div class="card-body">
+                            <h4 class="card-title" id="divNuevo" style="display:none">Crear Nuevo Acuerdo Suplementario</h4><h4 class="card-title" id="divEdicion" style="display:none">Edición Acuerdo Suplementario</h4>
+                            <hr />
+                            <div class="form-material m-t-40 row">
+                                <input type="hidden" name="acuerdoSupMCAId" value="acuerdoSupMCAId" id="acuerdoSupMCAId" />
+                                <input type="hidden" value="@toModulos.moduloMCAId" name="moduloMCAId" id="moduloMCAId" />
+                                <div class="form-group col-md-12 m-t-40">
+                                    <label class="for=" first-name">Descripción <span class="required">*</span></label>
+                                    <input id="descripcion" name="descripcion" required="required" class="form-control" type="text">
+                                </div>
+                                <div class="form-group col-md-6 m-t-20">
+                                    <label class="for=" first-name">Número de Acuerdo <span class="required">*</span></label>
+                                    <input id="numero" name="numero" required="required" class="form-control" type="text" onkeypress="return RemoveCharacters(event)">
+                                </div>
+                                <div class="form-group col-md-6 m-t-20">
+                                    <label for="middle-name">Tipo de Extensión</label>
+                                    @Html.DropDownList("tipoExtencionId", ViewBag.TipoExtension as SelectList, "Seleccione el Tipo de Extensión", new { @required = "required", @style = "width: 85%;" })
+                                    <button class="btn btn-info" onclick="return fnOpenModal('#ModalTipoExtension', true, false);"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
+                                </div>
+                                <div class="form-group col-md-6 m-t-20">
+                                    <label class="for=" first-name">Monto (C$) <span class="required">*</span></label>
+                                    <input id="monto" name="monto" required="required" class="form-control decimalComma" placeholder="monto en números" type="text">
+                                </div>
+                                <div class="form-group col-md-6 m-t-20">
+                                    <label class="for=" first-name">Longitud (KM) <span class="required">*</span></label>
+                                    <input id="loguitud" name="loguitud" required="required" class="form-control decimalComma" placeholder="Longitud en números" type="text">
+                                </div>
+                                <div class="form-group col-md-6 m-t-20">
+                                    <label class="control-label">Fecha Inicio</label>
+                                    <div class="input-group date col-md-6">
+                                        <input type="text" class="form-control datepicker" id="fechaInicial" name="fechaInicial" value="" required="required" data-val-required="Campo requerido." />
+                                        <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6 m-t-20">
+                                    <label class="control-label">Fecha Fin</label>
+                                    <div class="input-group date col-md-6">
+                                        <input type="text" class="form-control datepicker" id="fechaFinal" name="fechaFinal" value="" required="required" data-val-required="Campo requerido." />
+                                        <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+
+                                @*<div class="row">
+                                    <div class="col-md-1" style="display:none" id="divBaja">
+                                        <label class="control-label">Opción</label>
+                                        <button type="button" class="btn waves-effect waves-light btn-sm btn-danger" onclick="return fnBajaDataA()"> <i class="mdi mdi-sim-off"></i> Anular</button>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12 m-t-20">
+                                    <button class="btn btn-success" id="btnguardar" onclick="return fnGuardarAcuerdo()">Guardar</button>
+                                    @*<button class="btn btn-success" type="submit">Guardar</button>
+                                    @*<button class="btn btn-danger" id="btnCancelar" onclick="return CerrarPanel()">Cancelar</button>
+                                </div>*@
+                                <div class="col-md-6">
+                                    <div class="button-group">
+                                        <div class="row container-fluid" style="margin-right:150px">
+                                            <button class="btn btn-success" id="btnguardar" onclick="return fnGuardarAcuerdo()">Guardar</button>
+                                            <button class="btn btn-danger" id="btnCancelar" onclick="return CerrarPanel()">Cancelar</button>
+                                            <button class="btn btn-danger" style="display:none" id="divBaja" onclick="return fnBajaDataA()">Anular</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="x_panel">
+                                        <div class="x_title">
+                                            <h6 class="card-title"><strong>Listado de Acuerdos Suplementarios Asociados al @toModulos.nombreModuloMCA</strong></h6>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <hr />
+                                        <div class="x_content form-horizontal" id="AcuerdosList">
+                                            @Html.Action("GetListaAcuerdos")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<!-- Modal para Tipo Extensión-->
+@using (Html.BeginForm(null, null, FormMethod.Post, new { area = "", id = "formNuevoTipoExtension" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="tipoFormulario" value="1" id="tipoFormulario" />
+    <!-- Modal -->
+    @Html.Partial("/Areas/Catalogos/Views/TipoExtension/_CreateEdit.cshtml")
+
+}
+
+
+
+
+
+
+

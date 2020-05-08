@@ -1,0 +1,35 @@
+﻿@if (Model != null)
+{
+    <div class="table-responsive m-t-40" style="margin-top:10px">
+        <table id="myTable" class="display nowrap table table-hover table-bordered stylish-table" cellspacing="0" width="100%" style="font-size:12px">
+            <thead style="color:#000;">
+                <tr>
+                    <th style="text-align:center">Roles</th>
+                    <th style="text-align:center"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr style="color:#263238;">
+                        @if (@item.Name == "Registro")
+                        {
+                            <td style="text-align:center">Recepcionista</td>
+                        }
+                        else
+                        {
+                            <td style="text-align:center">@item.Name</td>
+                        }
+
+                        <td style="text-align:center" width="60">
+                            <input name="Rol" id="radio_@item.Id" type="radio" value="@item.Id">
+                            <label for="radio_@item.Id"></label>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
